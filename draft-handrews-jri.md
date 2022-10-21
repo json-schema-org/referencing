@@ -64,9 +64,9 @@ Discussion of this draft takes place in the [GitHub repository](https://github.c
 
 # Introduction
 
-JSON Reference and Identification offers a modular set of features to enable interoperable support of identification and referencig across a wide range of formats.  These features are necessary to create data formats across a set of linked documents, but are often incidental to the primary functionality of a data format specification.  Offloading these features to common libraries and tools based on a standardized approach allows data format implementations to focus on the format's purpose with minimal need to understand complex and potentially multi-document structures.
+JSON Reference and Identification (JRI) offers a modular set of features to enable interoperable support of identification and referencig across a wide range of formats.  These features are necessary to create data formats across a set of linked documents, but are often incidental to the primary functionality of a data format specification.  Offloading these features to common libraries and tools based on a standardized approach allows data format implementations to focus on the format's purpose with minimal need to understand complex and potentially multi-document structures.
 
-Standalone JRI use cases include a variety of document transformations, transparent in-memory representations of linked documents, and locating, caching, and serving resources identified within or reference from a set of documents.
+Standalone JRI use cases include a variety of document transformations, transparent in-memory representations of linked documents, and locating, caching, and serving resources identified within or referenced from a set of documents.
 
 While {{?RFC8288}} web linking solves this problem in a more general way, a simplified, concise, and self-contained linking and identification system is better-suited to many specifications.  This allows those specifications to avoid complexity, and to avoid constraining their syntax to match any one of the many competing web linking-enabled JSON formats.
 
