@@ -210,8 +210,7 @@ All of the pre-existing `$`-prefixed keywords that might become part of a refere
 * Uses `$href` and `$embedded` for `$ref` and `$id` to avoid collision with JSON Schema
 * Defines behavior in terms of HTTP, web linking, and URLs
 * `$href` based on JSON Reference's `$ref`
-* `$embedded` uses the embedded resource behavior of `$id` in the about-to-be-published draft of JSON Schema
-* `$embedded` restricted to absolute-URIs (with scheme, without fragment)
+* `$embedded` introduces the embedded resource behavior of that `$id` adopted in the following JSON Schema draft
 * JSON Pointer fragments not allowed to cross `$embedded`
 * Tentatively proposes `$header` to further describe resource relationships
 

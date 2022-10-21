@@ -41,3 +41,7 @@ Proposals should be written in Markdown and submitted as PRs from a fork of the 
 Plain markdown is welcome.  The repository will also automatically build [kramdown-rfc](https://github.com/cabo/kramdown-rfc) format documents, which can use the [markdown I-D template](https://github.com/martinthomson/i-d-template) as a starting point.
 
 You will need a reasonably recent version of Python 3 to run a local build, but the makefile will check out everything else it needs using a submodule and automatically create a virtual env for the build.
+
+## License
+
+The contents of this repository are [licensed under](./LICENSE) either the BSD 3-clause license *or* the Academic Free License v3.0.
