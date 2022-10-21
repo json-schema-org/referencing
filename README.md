@@ -18,6 +18,8 @@ This has led to a number of challenges:
 
 For links to numerous discussions and a complete history of the potentially relevant keywords, see the [BACKGROUND](BACKGROUND.md) file.
 
+Please note that JSON Schema's dynamic referencing features (e.g. `"$dynamicAnchor"` and `"$dynamicRef"`) are ***not*** within the scope of this repository.
+
 ## Proposals
 
 Proposals in this repository are expected to address these concerns for the entire community, including but not limited to the projects mentioned above.
