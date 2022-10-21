@@ -233,7 +233,8 @@ All of the pre-existing `$`-prefixed keywords that might become part of a refere
 ### 2021-02-15 OpenAPI Specification [v3.1.0](https://spec.openapis.org/oas/v3.0.1.html)
 
 * Uses superset of JSON Schema draft 2020-12
-* Uses JSON Reference draft-03, but only outside of schemas
+* Uses modified JSON Reference draft-03, but only outside of schemas
+* The JSON Ref modification is allowing "summary" and "description" alongside "$ref"
 * Base URI determined by "the referring document" in accordance with RFC 3986 (but `$id` has normal base URI-modifying behavior inside of schemas)
 
 ### 2020-12-08 JSON Schema Core [draft-bhutton-json-schema-00](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00) (draft 2020-12)
