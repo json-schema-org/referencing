@@ -1,8 +1,10 @@
-# The `"$ref"` Story So Far
+# The `"$ref"` (&amp; Friends) Story So Far
 
-[Notable discussions and issues](#notable-discussions-and-issues)
-[Select tools and their features](#select-ools-and-their-features)
-[History of reference and identification keywords](#history-of-reference-and-identification-keywords)
+**Table of Contents**
+
+1. [Notable discussions and issues](#notable-discussions-and-issues)
+2. [Select tools and their features](#select-tools-and-their-features)
+3. [History of reference and identification keywords](#history-of-reference-and-identification-keywords)
 
 The contents of the following sections were chosen in a rather idiosyncratic manner and are not comprehensive.  PRs for important missing links are welcome.
 
