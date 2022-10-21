@@ -115,26 +115,6 @@ For formats that incorporate JRI, "processing" includes resolving relative IRI-r
 
 # JRI Fundamentals
 
-## JRI Keyword Syntax
-
-JRI keywords are defined with names and values representable as {{?RFC3629}} UTF-8 strings, with keyword names representable in {{?RFC20}} ASCII.  As such, they can be used as object properties in interoperable JSON documents as precribed by {{?RFC8259, Sections 4, 7, and 8.1}}, as well as any other JSON Pointer-compatible documents.
-
-JRI keywords MAY be used in data formats that are only capable of representing a subset of UTF-8 string values, with the obvious limitation that only the representable subset of JRI keyword values will be usable.
-
-As {{!RFC3987, Section 3}} defines mappings between IRI and URI syntax, JRI MAY be used in data formats that can only directly represent URIs.
-
-### The "$" prefix
-
-JRI keywords MUST start with a "$" character.  Context specifications MAY define their own "$"-prefixed keywords, however this is NOT RECOMMENDED as future specifications that extend JRI as discussed in {{extending}} will use that prefix.[^8]
-
-[^8]: The usage of "$" as a prefix in the JSON Schema Core Vocabulary pre-dates JRI, and is expected to continue.  Some older JSON Schema proposals from immediately post-draft-04 also used a "$" prefix, but none were adopted and JSON Schema now discourages the use of that prefix.
-
-### Exclusion of "$comment"
-
-For compatibility with JSON Schema {{?I-D.bhutton-json-schema-01, Section 8.3}}, JRI requires that a `$comment` keyword present in the same object as any JRI keywords MUST NOT impact the semantics of those JRI keywords.  In particular, `$comment` MUST NOT be used as a semantic disambiguator as described in {{disambiguator}}.
-
-However, `$comment` is not itself considered to be a JRI keyword.  JRI does not place any requirements on the usage, data type, syntax, or other semantics of `$comment` in context specifications.  JRI implementations MUST NOT require that a `$comment` adjacent to JRI keywords conform to JSON Schema's `$comment` keyword, unless explicitly required to do so by a context specification.
-
 ## IRI Behavior in JRI {#iri-behavior}
 
 All IRI behavior within JRI is governed by {{!RFC3987}}, {{!RFC3986}}, and any relevant standards specifying IRI (or URI) scheme-specific syntax and semantics or media type-specific IRI fragment syntax and semantics.
@@ -164,7 +144,29 @@ Standalone implementations of context-independent JRI MUST NOT attempt to automa
 
 A resource MAY (and likely will) have multiple IRIs, but there is no way for an IRI to identify more than one resource.  When multiple primary or secondary resources attempt to identify as the same IRI through any combination of JRI keywords and context specification features, implementations SHOULD raise an error condition.  Otherwise the result is undefined, and even if documented will not be interoperable.
 
-# JRI Keywords
+## JRI Keywords
+
+### General syntax
+
+JRI keywords are defined with names and values representable as {{?RFC3629}} UTF-8 strings, with keyword names representable in {{?RFC20}} ASCII.  As such, they can be used as object properties in interoperable JSON documents as precribed by {{?RFC8259, Sections 4, 7, and 8.1}}, as well as any other JSON Pointer-compatible documents.
+
+JRI keywords MAY be used in data formats that are only capable of representing a subset of UTF-8 string values, with the obvious limitation that only the representable subset of JRI keyword values will be usable.
+
+As {{!RFC3987, Section 3}} defines mappings between IRI and URI syntax, JRI MAY be used in data formats that can only directly represent URIs.
+
+#### The "$" prefix
+
+JRI keywords MUST start with a "$" character.  Context specifications MAY define their own "$"-prefixed keywords, however this is NOT RECOMMENDED as future specifications that extend JRI as discussed in {{extending}} will use that prefix.[^8]
+
+[^8]: The usage of "$" as a prefix in the JSON Schema Core Vocabulary pre-dates JRI, and is expected to continue.  Some older JSON Schema proposals from immediately post-draft-04 also used a "$" prefix, but none were adopted and JSON Schema now discourages the use of that prefix.
+
+#### Exclusion of "$comment"
+
+For compatibility with JSON Schema {{?I-D.bhutton-json-schema-01, Section 8.3}}, JRI requires that a `$comment` keyword present in the same object as any JRI keywords MUST NOT impact the semantics of those JRI keywords.  In particular, `$comment` MUST NOT be used as a semantic disambiguator as described in {{disambiguator}}.
+
+However, `$comment` is not itself considered to be a JRI keyword.  JRI does not place any requirements on the usage, data type, syntax, or other semantics of `$comment` in context specifications.  JRI implementations MUST NOT require that a `$comment` adjacent to JRI keywords conform to JSON Schema's `$comment` keyword, unless explicitly required to do so by a context specification.
+
+### Evaluation order
 
 JRI defines several keywords, which fall into the categories of identification (`$id`, `$anchor`), location (`$defs`), and referencing (`$ref`).  These keywords MUST be evaluated in the following order when present:
 
@@ -177,19 +179,11 @@ The logic of this ordering is that primary resources must be identified as all o
 
 To ensure that as many references as possible are resolvable within a set of documents, all identification and location keywords within those documents SHOULD be processed prior to processing any reference keywords.
 
-## Processing JRI keywords alongside of context specification keywords
-
-Context specifications that define keywords with analogous functionality to JRI keywords SHOULD process each of them at the same point in the processing order as their analogous JRI keyword.  Changing the ordering of identifiers and references in particular is likely to produce counter-intuitive behavior, and reduces the interoperability of the JRI keywords with tools that are not context-aware.
-
-Context specifications that define keywords with other behaviors MAY define any processing order for them.  However, it is RECOMMENDED that any keywords that might be impacted by the behavior of JRI identifier and location keywords be processed after those keywords.
-
-JRI referencing is only interoperable if all non-JRI keywords (other than those overlapping in functionality with JRI identifiers and locations) are processed after JRI referencing keywords.  However, the semantics of keywords appearing alongside of JRI references is determined by context specifications, which therefore MAY define other ordering requirements.
-
-## Identification
+### Identification
 
 JRI offers two identification keywords:  one for primary resources, and one for secondary resources.
 
-### `$id`
+#### `$id`
 
 The value of the `$id` property MUST be a string, and MUST be a valid IRI-reference as defined by {{!RFC3987, Section 2.2}}, and MUST NOT contain a fragment.
 
@@ -197,7 +191,7 @@ The object containing the `$id` property MUST be considered to be a primary reso
 
 If the object containing the `$id` property is not the root object of the document, the encapsulating resource MUST be considered to be an "encapsulating entity" per {{!RFC3986, Section 5.1.2}}.
 
-### `$anchor`
+#### `$anchor`
 
 The value of the `$anchor` property MUST be a string, and MUST be a valid IRI fragment according to the `ifragment` ABNF production in {{!RFC3987, Section 2.2}}.
 
@@ -205,7 +199,7 @@ Context specifications that do not define media types, or that define media type
 
 Context media types that define a fragment syntax SHOULD further constrain the syntax of `$anchor` to the set of fragments valid for that media type.  Any fragment syntax that correlates with the inherent structure of the document SHOULD be forbidden to avoid defining a fragment that conflicts with the document structure.
 
-## Location
+### Location
 
 Many data formats perform some sort of action for each object that might contain JRI keywords.  For example, JSON Schema allows JRI keywords in schema objects, but most schema objects are automatically applied to instances.  To facilitate re-use, such formats need a location where re-usable objects can be stored without causing an action to happen unless and until they are referenced.
 
@@ -213,33 +207,33 @@ Context specifications will likely define their own such keywords, such as the `
 
 [^70]: It's also possible to bundle documents that do not use `$defs` into a document that does, and can therefore be un-bundled by a generic bundling tool.  I'm not sure of the best way to talk about that, as I did not want to get into defining a bundling media type.
 
-### `$defs`
+#### `$defs`
 
 The value of the `$defs` property MUST be an object, which MUST have objects as the values of all of its properties.
 
 If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under `$defs` SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.  This is necessary to support bundling, which places resource root objects under `$defs`
 
-## Referencing
+### Referencing
 
 JRI reference usage has two components: resolving the reference target and interpreting its semantics.  JRI offers several keywords for determining a reference target.  Once determined, regardless of which keywords are used, the possible semantics are as described in {{ref-semantics}}.
 
-### `$ref`
+#### `$ref`
 
 The value of the `$ref` property MUST be a string, and MUST be a valid IRI-reference as defined by {{!RFC3987, Section 2.2}}.  The IRI produced by resolving this IRI-reference against the current base IRI identifies the reference target.
 
 By default, the reference target MAY be assumed to be of whatever media type would otherwise be present inline, and fragments MAY be evaluated accordingly.  Context specifications MAY set other requirements regarding the nature of reference targets but MUST NOT expect these requirements to be interoperable with standalone JRI implementations.
 
-### `$extRef`
+#### `$extRef`
 
 To avoid overloading the behavior of `$ref` or relying on non-interoperable context-specific behavior, `$extRef` (for "extensible reference") allows specifying additional metadata as well as alternative mechanisms for secondary resource identifiecation.[^90]
 
 [^90]: It is not yet clear how this should work.  I have asked the AsyncAPI team some clarifying questions.  An object value in which an IRI (without fragment) is provided in one member, and a (non-fragment) JSON Pointer or other fragment-substitute is provided in another would seem to solve some problems.  However, there is also a need to set a per-reference media type, and such a media type might have a fragment syntax.  We also don't want it to be easy to define both a fragment and a fragment alternative in the same reference, as the result of that would be unintuitive at best.  This is why I dropped `$refPtr` as a modifier of `$ref` (plus it made it impossible to guarantee that `$ref` was being evaluated properly without knowing more than otherwise necessary about how a document uses JRI.
 
-### Reference semantics {#ref-semantics}
+#### Reference semantics {#ref-semantics}
 
 Reference semantics come in two varieties, object-level and keyword-level.  Object-level semantics are, under certain circumstances, both safe and interoperable in a context-independent manner.  Keyword-level semantics allow for more flexible semantic integration of referencing with a context-specification through allowing adjacent keywords.  However, this flexibility comes at the cost of interoperability, at least when adjacent keywords are actually present.
 
-#### Object-level semantics {#object-level}
+##### Object-level semantics {#object-level}
 
 With object-level semantics, an object containing a JRI reference keyword is effectively replaced with its target.  This results in an evaluation path in which the reference keyword does not appear.
 
@@ -247,7 +241,7 @@ Object-level semantics are generally safe to assume when the object only contain
 
 Object-level replacement MAY be implemented by producing a copy of the source document with the reference object replaced by the contents of its target.  When a reference target itself contains references, an implementation MUST replace all references in the target prior to replacing the source reference with the target or otherwise keep track of the resolution context to avoid improperly evaluating a relative reference.
 
-#### Keyword-level semantics {#keyword-level}
+##### Keyword-level semantics {#keyword-level}
 
 With keyword-level semantics, a JRI reference keyword remains part of the evaluation path, and has the effect of evaluating its target in the current context, as defined by the context specification.  Context specifications MAY define how such effects are combined with the effects of non-JRI keywords in the same object as the JRI reference keywords.  Such combined effects MUST NOT involve changing the behavior of JRI keywords to conflict with this specification in any way.
 
@@ -255,7 +249,7 @@ There is no universally safe way to edit a document containing a reference to co
 
 [^30]: At one point in JSON Schema spec development, we discussed allowing reference "removal" by replacing `$ref` and its IRI value with `$inline` and the reference target value.  This allows inlining at the keyword level without needing to understand a context specification.  `$inline` was essentially a one-element `allOf` that conveyed that a reference had been inlined.  Is this worth reviving in JRI?  Doing so would not force JSON Schema to adopt it.  One complexity would be that if there are multiple JRI reference keywords, we would either need one inlinng keyword per reference if we want it to be reversible, or `$inline` would have to support meta-data along with the target.
 
-#### Falling back to object-level semantics
+##### Falling back to object-level semantics
 
 Context specifications that use keyword-level semantics SHOULD ensure that, in the absence of keywords adjacent to JRI reference keywords, object-level JRI reference semantics can be assumed without changing the semantics of the document according to the context specification.  This requires that the difference in evaluation paths not impact the context semantics.
 
@@ -271,11 +265,11 @@ Such implementations MAY offer non-default configurations that incorporate conte
 
 The popularity of tools devoted only to processing `$ref` demonstrates a substantial market for simple standalone implementations of a JRI subset.  Standalone implementations that only support a subset of JRI MUST NOT claim to be full implementations of JRI, and MUST document what subset is supported.
 
-# JRI Applications
+## JRI Applications
 
 JRI exists to faciliated interoperable tooling.  Therefore, several common applications of JRI here are described to encourage common functionality.
 
-## Locating, caching, and serving resources
+### Locating, caching, and serving resources
 
 A primary use case for JRI involves removing the need for downstream tools to track base IRIs and retrieve identified resources.  We will refer to a tool that fulfills this use case as a _JRI cache_.  In this use case, downstream tooling still encounters JRI references, but they have already been resolved to full IRIs (with a scheme), and the implementation resolves all IRIs by requesting them from the JRI cache.
 
@@ -302,35 +296,35 @@ A JRI cache implementation MAY:
     * Such a system SHOULD allow plugins that locate resources other than by retrieving the IRI; for example in a development environment it might be preferable to resolve `https:` resources from the local file system
     * Registering a plugin is sufficient to consider the JRI cache implementation "non-default" with respect to the requirement to treat IRIs as non-locators by default
 
-## Document set transformations
+### Document set transformations
 
 A common family of use cases involves reading one or more JRI-using documents and transforming them in a way that makes them usable by a wider range of tooling.
 
-### Reference removal
+#### Reference removal
 
 This use case attempts to remove all references with object-level semantics by replacing the reference objects with their targets, resulting in a plain JSON (or other underlying format) document that requires no knowledge of JRI.
 
 Removing references from a set of documents with differing base IRIs, or involving fragments that are to be resolved within a specific primary resource carries additional restrictions.  References MUST be traversed in a depth-first fashion and removed from the leaf to the root, so that each removal takes place in the proper primary resource context and with the proper base IRI.
 
-### Bundling to JSON Pointer fragment references only
+#### Bundling to JSON Pointer fragment references only
 
 Despite implementing specifications that allow multi-document sets, in practice a significant number of tools only support same-resource references using JSON Pointer fragments (the only fragmenty syntax listed by name in older JSON Reference specifications).
 
 This form of bundling creates a single document and adjusts all references to only point to the newly bundled locations using JSON Pointers.
 
-### Bundling with stable references
+#### Bundling with stable references
 
 A set of documents that each set `$id` in their root objects, and that only refer to each other using the primary resource identifiers set that way (plus any approriate fragment syntax) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
 
 Unlike the previous two use cases, this type of bundling can be un-bundled.  An interoperable bundling format that can be safely un-bundled regardless of context is defined in {{bundling-interop}}.
 
-## Transparent in-memory representation of document sets
+### Transparent in-memory representation of document sets
 
 This use case aims to present a set of linked documents as if no references were present at all (if object-level semantics are used), or as if the reference values are their targets rather than IRIs (if keyword-level semantics are used).  Typically, this involves some sort of lazy proxy object to ensure cyclic references do not automatically cause infinite recursion.
 
 Depending on the intended scope of support (e.g. a single self-referential document vs document sets that link to each other and possibly external resources), this use case can benefit from being implemented on top of a JRI cache.
 
-# The interoperable JRI Subset
+## The interoperable JRI Subset
 
 Context-independent interoperability places several additional requirements on any document that needs to be processed by a context-independent JRI implementation.  Most of these requirements are not enforceable by a context-independent implementation.  Users of context-independent implementations MUST NOT expect documents that violate these requirements to be detected by the implementation, and MUST NOT expect predictable, interoperable behavior
 from processing such documents.
@@ -339,13 +333,13 @@ A document that can be interoperably processed by a context-independent JRI impl
 
 The requirements below are stated for context-independent formats.  A document in a non-context-indpendent format can be context-independent if it avoids using any features forbidden by the context-independent format requirements.
 
-## Restricting base IRI changes and IRI assignment {#interop-overlap}
+### Restricting base IRI changes and IRI assignment {#interop-overlap}
 
 A context-independent format MUST NOT offer features for assigning IRIs to primary or secondary resources, or changing the base IRI from within a document.
 
 A context-independent document MUST NOT use any such features if the data format offers them.
 
-## Recognizing JRI keywords
+### Recognizing JRI keywords
 
 The property names in the value of `$defs` are known to be non-keyword properties as this object syntax is defined by JRI.  These property names therefore MUST be considered exempt from the other requirements in this section regarding property names.
 
@@ -353,13 +347,13 @@ A context-independent format MUST NOT allow object properties with names matchin
 
 Note that as JRI implementations are not required to validate keyword values, simply having the correct value type (e.g. string) is enough to make such a keyword appear to be a valid JRI keyword.  Context-independent JRI implementations MAY offer a non-default configuration option to validate potential JRI keyword values and ignore (rather than treat as an error) those that do not have valid values.
 
-## Ensuring consistent reference semantics
+### Ensuring consistent reference semantics
 
 A context-independent format MUST NOT allow any non-JRI-reference keywords in the same object as any JRI reference keyword.[^11]
 
 [^11]: Should we allow a context-independent format to allow non-JRI keywords in reference objects as long as it mandates that they are, in all circumstances, ignored?  Aside from `$comment`, this seems like asking for trouble, and OpenAPI and AsyncAPI notably forbid any properties other than `$ref` in their Reference Objects.  But it would be closer to JSON Reference behavior.
 
-## Finding JRI identifiers
+### Finding JRI identifiers
 
 A context-independent format MUST NOT allow JRI identifiers anywhere other than its root object or under a `$defs` keyword appearing (recursively) in the root object.[^10]
 
@@ -367,7 +361,7 @@ A context-independent format MUST NOT allow JRI identifiers anywhere other than 
 
 A context-independent document MUST NOT use JRI identifiers outside of these locations.
 
-## Interoperable bundling and un-bundling {#bundling-interop}
+### Interoperable bundling and un-bundling {#bundling-interop}
 
 A context-independent bundling tool can un-bundle a document meeting the following requirements:
 
@@ -402,7 +396,15 @@ It is RECOMMENDED that context formats with functionality that overlaps with JRI
 
 For further interoperability concerns see {{interop-overlap}}.
 
-# Extending JRI {#extending}
+### Processing JRI keywords alongside of context specification keywords
+
+Context specifications that define keywords with analogous functionality to JRI keywords SHOULD process each of them at the same point in the processing order as their analogous JRI keyword.  Changing the ordering of identifiers and references in particular is likely to produce counter-intuitive behavior, and reduces the interoperability of the JRI keywords with tools that are not context-aware.
+
+Context specifications that define keywords with other behaviors MAY define any processing order for them.  However, it is RECOMMENDED that any keywords that might be impacted by the behavior of JRI identifier and location keywords be processed after those keywords.
+
+JRI referencing is only interoperable if all non-JRI keywords (other than those overlapping in functionality with JRI identifiers and locations) are processed after JRI referencing keywords.  However, the semantics of keywords appearing alongside of JRI references is determined by context specifications, which therefore MAY define other ordering requirements.
+
+## Extending JRI {#extending}
 
 [^40]
 
@@ -410,7 +412,7 @@ For further interoperability concerns see {{interop-overlap}}.
 
 Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.
 
-## Disambiguatingn reference semantics {#disambiguator}
+### Disambiguating reference semantics {#disambiguator}
 
 Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
 
