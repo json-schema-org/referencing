@@ -24,65 +24,6 @@ normative:
   # all normative references generated automatically
 
 informative:
-  # For some reason, I-D.pbryan-zyp-json-ref-00 won't resolve automatically
-  #
-  # This produces the following warning in the build which should be disregarded:
-  #
-  # *** warning: explicit settings completely override canned bibxml in reference I-D.pbryan-zyp-json-ref-00
-  #
-  # Without doing this, if you use s {{?...}} reference the following error appears instead:
-  # /.../.cache/xml2rfc/reference.I-D.pbryan-zyp-json-ref-00.xml: fetching from https://datatracker.ietf.org/doc/bibxml3/draft-pbryan-zyp-json-ref-00.xml
-  # *** Can't get with persistent HTTP: Status code 404 while fetching https://datatracker.ietf.org/doc/bibxml3/draft-pbryan-zyp-json-ref-00.xml
-  # *** 404 Not Found while fetching https://datatracker.ietf.org/doc/bibxml3/draft-pbryan-zyp-json-ref-00.xml
-  # *** No such file or directory @ rb_sysopen - /.../.cache/xml2rfc/reference.I-D.pbryan-zyp-json-ref-00.xml for /Users/handrews/.cache/xml2rfc/reference.I-D.pbryan-zyp-json-ref-00.xml
-  # ** Can't manipulate reference XML: undefined method `attributes' for nil:NilClass
-  #
-  #              d.root.attributes["anchor"] = anchor
-  #                    ^^^^^^^^^^^
-  # *** KRAMDOWN_OFFLINE: Inserting broken reference for reference.I-D.pbryan-zyp-json-ref-00.xml
-  #
-  # This way, you need to use {{...}} instead of {{?...}} and you get a warning,
-  # but it works and looks the same as the others in the rendered HTML.
-  I-D.pbryan-zyp-json-ref-00:
-    title: JSON Reference
-    date: 2011-11-14
-    target: "https://datatracker.ietf.org/doc/html/draft-pbryan-zyp-json-ref-00"
-    author:
-    - ins: P. C. Bryan
-    - ins: K. Zyp
-
-  # The rest of these have to be manual as they are not tracked by the IETF bibliography.
-  json-ref-2019:
-    title: JSON Reference (draft proposal)
-    date: 2019-08-13
-    target: "https://github.com/hyperjump-io/browser/blob/master/lib/json-reference/README.md"
-    author:
-    - ins: Jason Desrosiers
-  swagger1.2:
-    # Swagger 1.2 does not credit any authors
-    title: Swagger RESTful API Documentation Specification v1.2
-    date: 2014-03-14
-    target: "https://github.com/OAI/OpenAPI-Specification/blob/main/versions/1.2.md"
-  oas2.0:
-    title: OpenAPI Specification v2.0 (fka Swagger RESTful API Documentation Specification)
-    date: 2014-09-08
-    target: "https://spec.openapis.org/oas/v2.0.html"
-    author:
-    - ins: Darrel Miller
-    - ins: Jeremy Whitlock
-    - ins: Marsh Gardiner
-    - ins: Ron Ratovsky
-  oas3.0:
-    title: OpenAPI Specification v3.0.0
-    date: 2017-07-26
-    target: "https://spec.openapis.org/oas/v3.0.0.html"
-    author:
-    - ins: Darrel Miller
-    - ins: Jeremy Whitlock
-    - ins: Marsh Gardiner
-    - ins: Mike Ralphson
-    - ins: Ron Ratovsky
-    - ins: Uri Sarid
   oas3.1:
     title: OpenAPI Specification v3.1.0
     date: 2021-02-15
@@ -96,21 +37,10 @@ informative:
     - ins: Uri Sarid
   # AsyncAPI does not date their specs or list authors
   # Dates are from GitHub release commits
-  # Git blame on 1.0 shows moslty Fran Méndez plus contributions from Mike Ralphson,
-  # but I am not sure they would want that author listing
-  # I have not run Git blame or otherwise looked into 2.x authorship
-  async1.0:
-    title: AsyncAPI Specification v1.0.0
-    date: 2017-09-20
-    target: "https://github.com/asyncapi/spec/blob/1.0.0/README.md"
   async2.0:
     title: AsyncAPI Specification v2.0.0
     date: 2019-09-11
     target: "https://www.asyncapi.com/docs/reference/specification/v2.0.0"
-  jref-nonj-linking:
-    title: JSON Reference and non-JSON Linking (draft proposal)
-    date: 2022-08-04
-    target: "https://github.com/asyncapi/spec/pull/825"
 
 --- abstract
 
@@ -122,13 +52,13 @@ to implement them in a familiar and interoperable way.
 
 *RFC EDITOR: please remove this section before publication*
 
-This specification is a response to the usage of these keywords both inside and outside of JSON Schema during the decade since `id` (which was later split into `$id` and `$anchor`) and `$ref` were first introduced in [JSON Schema draft-03](#I-D.zyp-json-schema-03).  The `definitions` keyword (which later became `$defs`) was introduced in [JSON Schema Validation draft-04](#I-D.fge-json-schema-validation-00), at which point `$ref` had been split into its own short-lived but influential [JSON Reference](#I-D.pbryan-zyp-json-ref-03) proposal.
+This specification is a response to the usage of these keywords both inside and outside of JSON Schema during the decade since `id` (which was later split into `$id` and `$anchor`) and `$ref` were first introduced in JSON Schema draft-03 {{?I-D.zyp-json-schema-03}}.  The `definitions` keyword (which later became `$defs`) was introduced in JSON Schema Validation draft-04 {{?I-D.fge-json-schema-validation-00}}, at which point `$ref` had been split into its own short-lived but influential JSON Reference {{?I-D.pbryan-zyp-json-ref-03}} proposal.
 
-The full and rather complex history of these keywords, including their usage in OpenAPI and AsyncAPI, as well as other proposals to split some or all of them back into a separate specification, is detailed in {{changelog}}.
+The full and rather complex history of these keywords, including their usage in OpenAPI and AsyncAPI, as well as other proposals to split some or all of them back into a separate specification, is detailed in the [BACKGROUND.md](https://github.com/json-schema-org/referencing/tree/main/BACKGROUND.md) file in the repository containing this document.
 
-Use cases have been compiled from popular tools that support JSON Reference (and sometimes other keywords in this specification) without being full JSON Schema implementations, and from specification requirements regarding non-JSON Schema use.  Notably, some of the tools support additional JRI keywords that were not included in JSON Reference, motivating a larger specification than simply a revival of JSON Reference.  These requirements and use cases are detailed in {{reasons}}.
+Use cases have been compiled from popular tools that support JSON Reference (and sometimes other keywords in this specification) without being full JSON Schema implementations, and from specification requirements regarding non-JSON Schema use.  Notably, some of the tools support additional JRI keywords that were not included in JSON Reference, motivating a larger specification than simply a revival of JSON Reference.  These requirements and use cases are also available in the [BACKGROUND.md](https://github.com/json-schema-org/referencing/tree/main/BACKGROUND.md) file.
 
-Discussion of this draft takes place on the [JSON Schema Slack server](https://json-schema.org/slack).
+Discussion of this draft takes place in the [GitHub repository](https://github.com/json-schema-org/referencing) and on the [JSON Schema Slack server](https://json-schema.org/slack).
 
 --- middle
 
@@ -234,44 +164,6 @@ Standalone implementations of context-independent JRI MUST NOT attempt to automa
 
 A resource MAY (and likely will) have multiple IRIs, but there is no way for an IRI to identify more than one resource.  When multiple primary or secondary resources attempt to identify as the same IRI through any combination of JRI keywords and context specification features, implementations SHOULD raise an error condition.  Otherwise the result is undefined, and even if documented will not be interoperable.
 
-# Incorporating JRI into a context specification
-
-A context specification incorporates JRI into a data format that describes JSON Pointer-compatible documents.  Such a specification MUST normatively reference this specification, and MUST specify any relevant context-specific requirements that this specification defers to context specifications.[^3]
-
-[^3]: Should a root object be mandated?  If not, how much variation to accommondate.  Should a root object have to allow JRI keywords?  **No, because OAS does not (and probably AsyncAPI does not either).**
-
-## Incorporating a subset of JRI
-
-Since, as noted in {{iri-behavior}}, JRI keywords do not directly interact with each other, context specifications MAY restrict their usage of JRI in any of the following ways:
-
-* Incorporating only a subset of the JRI keywords
-* Restricting the locations within a document in which each JRI keyword can appear
-* Further restricting the syntax of JRI keywords
-
-Context specifications MUST NOT change the behavior of JRI keywords in any way, including by making their behavior dependent on non-JRI keywords.  Context specifications MAY indirectly impact JRI keyword behavior as dictated by {{!RFC3986}} and {{!RFC3987}} in accordance with those specifications, such as by setting a base IRI.
-
-Additionally, context specifications MUST NOT define keyword behavior for any JRI keyword that they do not incorporate.  This is to ensure that context-independent implementations of JRI can reliably process any keyword that appears to be a JRI keyword.
-
-Extensible context specifications SHOULD NOT syntactically forbid the use of JRI keywords that they do not incorporate, as extensions might wish to incorporate additional JRI functionality.
-
-## Avoiding behavioral overlap
-
-If a context specification defines or inherits (e.g. as a structured-suffix media type) functionality that overlaps with JRI care must be taken to avoid unintuitive or even undefined behavior.
-
-It is RECOMMENDED that context formats with functionality that overlaps with JRI not use any keywords that duplicate native functionality, and restrict the syntax of any keywords that partially overlap in order to minimize if not eliminate the overlap.
-
-For further interoperability concerns see {{interop-overlap}}.
-
-# Standalone JRI implementations
-
-By definition, a standalone JRI implementation is an implementation that, in its default configuration, can only correctly process JRI in context-independent documents.
-
-Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document tha does not conform to the relevant context specification.
-
-## Implementing a standalone subset of JRI
-
-The popularity of tools devoted only to processing `$ref` demonstrates a substantial market for simple standalone implementations of a JRI subset.  Standalone implementations that only support a subset of JRI MUST NOT claim to be full implementations of JRI, and MUST document what subset is supported.
-
 # JRI Keywords
 
 JRI defines several keywords, which fall into the categories of identification (`$id`, `$anchor`), location (`$defs`), and referencing (`$ref`).  These keywords MUST be evaluated in the following order when present:
@@ -369,6 +261,16 @@ Context specifications that use keyword-level semantics SHOULD ensure that, in t
 
 For example, in JSON Schema, replacing an object that contains only `$ref` is guaranteed to not change the validation outcome, and only changes the evaluation path of annotations.  Since the presence of `$ref` in the evaluation path is used to determine whether keywords are present adjacent to `$ref`, omitting it when no such adjacent keywords are present is safe.  While JSON Schema specifies keyword-level semantics, a tool that replaced `$ref`-only objects with their targets according to object-level semantics prior to JSON Schema evaluation would not break the schema's behavior.
 
+# Standalone JRI implementations
+
+By definition, a standalone JRI implementation is an implementation that, in its default configuration, can only correctly process JRI in context-independent documents.
+
+Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document tha does not conform to the relevant context specification.
+
+## Implementing a standalone subset of JRI
+
+The popularity of tools devoted only to processing `$ref` demonstrates a substantial market for simple standalone implementations of a JRI subset.  Standalone implementations that only support a subset of JRI MUST NOT claim to be full implementations of JRI, and MUST document what subset is supported.
+
 # JRI Applications
 
 JRI exists to faciliated interoperable tooling.  Therefore, several common applications of JRI here are described to encourage common functionality.
@@ -428,26 +330,7 @@ This use case aims to present a set of linked documents as if no references were
 
 Depending on the intended scope of support (e.g. a single self-referential document vs document sets that link to each other and possibly external resources), this use case can benefit from being implemented on top of a JRI cache.
 
-# Extending JRI {#extending}
-
-[^40]
-
-[^40]: This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent kewyords can disambiguate semantics _within the context usage_ but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.
-
-Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.
-
-## Disambiguatingn reference semantics {#disambiguator}
-
-Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
-
-# Relationship to Web Linking
-
-The functionality of JRI could mostly be implemented using {{?RFC8288}} web linking.  However, there are a variety of competing JSON-based formats for linking, many of which impose structural constraints likely to conflict with the needs of context specifications.  JRI is a simpler and more focused specification, intended to be easily incorporated into a variety of possible formats.
-
-* The `$id` keyword effectively defines a link with relation type "self".
-* The `$ref` keyword effectively defines (and asks implementations to automatically follow) a link with the generic relation type "related".
-
-# Interoperability Considerations {#interop}
+# The interoperable JRI Subset
 
 Context-independent interoperability places several additional requirements on any document that needs to be processed by a context-independent JRI implementation.  Most of these requirements are not enforceable by a context-independent implementation.  Users of context-independent implementations MUST NOT expect documents that violate these requirements to be detected by the implementation, and MUST NOT expect predictable, interoperable behavior
 from processing such documents.
@@ -490,6 +373,55 @@ A context-independent bundling tool can un-bundle a document meeting the followi
 
 * The root object MUST contain `$defs`, and each bundled resource MUST be embedded in the `$defs` object; the names of the `$defs` properties are irrelevant
 * If the embedded resources' `$id` values are relative IRI-reference, the root object MAY contain an absolute-IRI `$id` so that the resources can be bundled and un-bundled without changing their `$id`s; when un-bundled, such resources are expected to be in a directory structure appropriate to their `$id`s relative to the shared base
+
+# Incorporating JRI into a context specification
+
+A context specification incorporates JRI into a data format that describes JSON Pointer-compatible documents.  Such a specification MUST normatively reference this specification, and MUST specify any relevant context-specific requirements that this specification defers to context specifications.[^3]
+
+[^3]: Should a root object be mandated?  If not, how much variation to accommondate.  Should a root object have to allow JRI keywords?  **No, because OAS does not (and probably AsyncAPI does not either).**
+
+## Incorporating a subset of JRI
+
+Since, as noted in {{iri-behavior}}, JRI keywords do not directly interact with each other, context specifications MAY restrict their usage of JRI in any of the following ways:
+
+* Incorporating only a subset of the JRI keywords
+* Restricting the locations within a document in which each JRI keyword can appear
+* Further restricting the syntax of JRI keywords
+
+Context specifications MUST NOT change the behavior of JRI keywords in any way, including by making their behavior dependent on non-JRI keywords.  Context specifications MAY indirectly impact JRI keyword behavior as dictated by {{!RFC3986}} and {{!RFC3987}} in accordance with those specifications, such as by setting a base IRI.
+
+Additionally, context specifications MUST NOT define keyword behavior for any JRI keyword that they do not incorporate.  This is to ensure that context-independent implementations of JRI can reliably process any keyword that appears to be a JRI keyword.
+
+Extensible context specifications SHOULD NOT syntactically forbid the use of JRI keywords that they do not incorporate, as extensions might wish to incorporate additional JRI functionality.
+
+## Avoiding behavioral overlap
+
+If a context specification defines or inherits (e.g. as a structured-suffix media type) functionality that overlaps with JRI care must be taken to avoid unintuitive or even undefined behavior.
+
+It is RECOMMENDED that context formats with functionality that overlaps with JRI not use any keywords that duplicate native functionality, and restrict the syntax of any keywords that partially overlap in order to minimize if not eliminate the overlap.
+
+For further interoperability concerns see {{interop-overlap}}.
+
+# Extending JRI {#extending}
+
+[^40]
+
+[^40]: This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent kewyords can disambiguate semantics _within the context usage_ but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.
+
+Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.
+
+## Disambiguatingn reference semantics {#disambiguator}
+
+Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
+
+# Relationship to Web Linking
+
+The functionality of JRI could mostly be implemented using {{?RFC8288}} web linking.  However, there are a variety of competing JSON-based formats for linking, many of which impose structural constraints likely to conflict with the needs of context specifications.  JRI is a simpler and more focused specification, intended to be easily incorporated into a variety of possible formats.
+
+* The `$id` keyword effectively defines a link with relation type "self".
+* The `$ref` keyword effectively defines (and asks implementations to automatically follow) a link with the generic relation type "related".
+
+# Interoperability Considerations {#interop}
 
 ## JRI behavior negotiation
 
@@ -537,8 +469,6 @@ Cyclic references cannot safely be processed in a way that is both interoperable
 
 --- back
 
-# Example usages with schemas
-
 # Media types, IRI fragments, and non-fragment JSON Pointers
 
 As stated by {{!RFC3986, Section 3.5}}, fragment syntax and semantics are defined by media types.  Attempting to use fragments other than as defined by a media type is behavior that is not in compliance with internet standards.
@@ -565,317 +495,15 @@ Note that a many documents in a format can be JSON Pointer-compatible, even if t
 
 On the other hand, the mixure of elements and attributes in XML means that XML is never JSON Pointer-compatible.  There is no obvious single way to map XML to JSON-like objects and arrays, as demonstrated by the need for the `xml` keyword in {{oas3.1}}.
 
-
-# Reasons {#reasons}
-
-## AsyncAPI requirements
-
-After most of this document was written, AsyncAPI began a discussion on reference [tooling requirements](https://github.com/orgs/asyncapi/discussions/485r) which turns out to line up rather well.
-
-## Survey of JSON Reference implementations
-
-RFC EDITOR PLEASE DELETE THIS SECTION.
-
-The following implementations demonstrate pre-existing demand for various features in this specification.  Their appearance here does not indicate any sort of endorsement or guarantee of suitability for purpose.  Feature lists come from the packages' documentation and have not been verified.
-
-Some of these projects are no longer in active development but still have high daily download/installation numbers.  This indicates that demand remains high for a stable library, rather than that the library has fallen out of use due to lack of demand.
-
-* JavaScript
-    * [jsonref](https://www.npmjs.com/package/jsonref)
-        * Supports `id` (draft-04) and `$ref` (JSON Reference)
-        * Supports supplying a mapping store object that can be shared among a document set
-        * Supports plugins for on-demand resource retrieval
-    * [json-refs](https://www.npmjs.com/package/json-refs)
-        * Supports `$ref` only
-        * Collects and stores metadata on references
-        * Metadata tracks circular references
-        * Metadata for overall resolution includes evaluation path, but with `$ref` itself elided
-        * Supports transclusion
-        * Supports resource caching
-        * Supports finding references (returned as JSON Pointers to the reference objects, with metadata)
-        * Supports filtering on local/remote/relative/invalid references
-        * Allows pre/post-processing hooks for reference objects
-    * [@apidevtools/json-schema-ref-parser](https://www.npmjs.com/package/@apidevtools/json-schema-ref-parser)
-        * Originally just called [json-schema-ref-parser](https://www.npmjs.com/package/json-schema-ref-parser)
-        * Supports `$ref` only
-        * Supports circular references via lazy proxies
-        * Supports transclusion
-        * Supports "bundling" to internal-only references (different from "bundling" in this spec)
-        * `id`/`$id` support has been [requested](https://github.com/APIDevTools/json-schema-ref-parser/issues/22), [multiple](https://github.com/APIDevTools/json-schema-ref-parser/issues/136), including in the context of [bundling](https://github.com/APIDevTools/json-schema-ref-parser/issues/97)
-        * `$anchor` support has been [requested](https://github.com/APIDevTools/json-schema-ref-parser/issues/222)
-        * The proper behavior of `$ref` with adjacent keywords has also [been discussed](https://github.com/APIDevTools/json-schema-ref-parser/issues/168)
-    * [@apidevtools/json-schema-reader](https://github.com/APIDevTools/json-schema-reader)
-        * Apparently never published (but the basics are well-documented)
-        * Handles `id`/`$id`, `$anchor`, and `$ref`
-        * Reads sets of JSON Schema documents and [maps their structure](https://github.com/APIDevTools/json-schema-reader/blob/main/docs/schema-structure.md)
-        * Distinguishes between resource location (URL) and identifier (URI)
-        * Seems to have very customizable resource retrieval and external resource support, but this was not documented before the project seems to have been abandoned
-        * Seems like it may be being re-absorbed into a revamped json-schema-ref-parser
-* PHP
-    * [League\JsonReference](https://json-reference.thephpleague.com/)
-        * Supports `id` (draft-04), `$id` (draft-06+) and `$ref` (JSON Reference)
-        * Supports plugins for on-demand resource retrieval
-        * Supports caching of retrieved resources using a shared cache object
-        * Supports circular references via lazy proxies
-        * Supports transclusion (inlining on serialization to JSON) if no circular references
-        * Supports custom serializers
-* Python
-    * [json-ref-dict](https://github.com/jacksmith15/json-ref-dict)
-        * Supports `$ref` only
-        * Lazy proxy objects
-        * Some basic document transformation features (include/exclude keys, value map)
-    * [jsonref](https://jsonref.readthedocs.io/en/latest/)
-        * Supports `$ref` only
-        * Uses proxy references and transcludes on access
-        * implements json module's interface for parsing/serializing with automatic reference replacement
-    * [jsonspec.reference](https://json-spec.readthedocs.io/reference.html)
-        * Supports `$ref` only
-        * Supports transclusion
-        * Notes that further relative references in an extracted/transcluded JSON value will not work
-        * Supports plugins for on-demand resource retrieval
-* Go
-    * [jsref](https://github.com/lestrrat-go/jsref)
-        * Supports `ref` only
-        * Supports plugins for resource retrieval, including from in-memory map
-
-There are also tools in Ruby, Java and Go that either have basic transclusion support or aren't sufficiently well-documented to easily determine their feature set.
-
-
-The more recent shift to allowing JSON Schema keywords adjacent to `$ref` has caused some confusion and difficulty (while solving other confusions and difficulties):
-
-* https://github.com/APIDevTools/json-schema-ref-parser/issues/200 (adjacent properties challenges)
-* https://github.com/APIDevTools/json-schema-ref-parser/issues/199 (base URI challenges)
-* https://github.com/APIDevTools/json-schema-ref-parser/issues/145 (implement 2019-09+ $ref, $id, $anchor)
-
 # Acknowledgements
 
 # FAQ
 {: numbered="false"}
 
 Q: Why this document?
-: Reasons.
+:
 
 # Change Log {#changelog}
 {: numbered="false"}
 
 RFC EDITOR PLEASE DELETE THIS SECTION.
-
-Due to the long an complex history of these keywords in general, and `$ref` in particular, this change log takes the unusual approach of treating all known formal and informal specifications that defined or adapt these keywords as part of this specification's history.  Unlike most I-D change logs, the other specifications are linked as informative reference to make it easier to examine the historical context.
-
-## JSON Referencing and Identification draft-handrews-jri-00
-{: numbered="false"}
-
-* Extract `$id`, `$anchor`, `$ref`, and `$defs` from JSON Schema
-* `$id` no longer allows any fragment at all
-* All keywords work with IRI-references rather than only URI-references
-* Add `$extRef` for working around fragment limitations and other difficulties
-* Defines evaluation order for keywords
-* Defines behavior for JSON Pointer-compatible documents
-* Defines how other specifications can use these keywords
-* Defines allowable restrictions within other specifications
-* Defines interoperable context-independent behavior
-* Defines what context-specific behavior can be defined by other specifications
-
-## JSON Reference and non-JSON Linking (draft proposal)
-{: numbered="false"}
-
-* {{jref-nonj-linking}}
-* Proposes reviving JSON Reference with additional `referenceFormat` keyword
-* Distinguishes between "referencing" (for JSON targets) and "linking" (for non-JSON targets)
-* "Referencing" behavior matches that of draft-pbryan-zyp-json-ref-03
-* "Linking" requires setting `referenceFormat` to a media type adjacent to the reference object (not to `$ref)
-* Resolving "linking" behavior produces a `content` keyword alongside of `$ref` with the target contents as its value in string form
-* Fragments for JSON targets still interpreted as JSON Pointer
-* Fragments for non-JSON targets MUST be ignored
-
-## JSON Schema Core draft-bhutton-json-schema-01 (draft 2020-12 clarification)
-{: numbered="false"}
-
-* {{?I-D.bhutton-json-schema-01}}
-* No changes for JRI-related keywords
-
-## OpenAPI Specification v3.1.0
-{: numbered="false"}
-
-* {{oas3.1}}
-* Uses superset of JSON Schema draft 2020-12
-* Uses JSON Reference draft-03, but only outside of schemas
-* Base URI determined by "the referring document" in accordance with RFC 3986 (but `$id` has normal base URI-modifying behavior inside of schemas)
-
-## JSON Schema Core draft-bhutton-json-schema-00 (draft 2020-12)
-{: numbered="false"}
-
-* {{?I-D.bhutton-json-schema-00}}
-* No changes for JRI-related keywords
-
-## JSON Schema Core draft-handrews-json-schema-02 (draft 2019-09)
-{: numbered="false"}
-
-* {{?I-D.handrews-json-schema-02}}
-* `$ref` now treated as a normal JSON Schema applicator keyword
-* Therefore `$ref` sibling keywords have normal behavior as with any other applicator
-* `$id` no longer defines fragments, and cannot contain one (except empty fragment for compatibility)
-* `$id` considered to define an embedded resource, allowing schema behavior (`$schema`) to be resource-scoped
-* `$anchor` takes over plain name fragment definition, syntax is just the name, not a URI-reference
-* `definitions` renamed to `$defs` and moved to this specification from JSON Schema Validation
-* Behavior of JSON Pointer fragments crossing a resource boundary (`$id`) is implementation-defined and therefore not interoperable
-
-## AsyncAPI Specification v2.0.0
-{: numbered="false"}
-
-* {{async2.0}}
-* Uses superset of JSON Schema draft-07
-* Uses JSON Reference draft-03, both inside and outside of schemas
-* Base URI not mentioned
-
-## JSON Reference (draft proposal)
-{: numbered="false"}
-
-* {{json-ref-2019}}
-* Proposes reviving and extending JSON Reference
-* Uses `$href` and `$embedded` for `$ref` and `$id` to avoid collision with JSON Schema
-* Defines behavior in terms of HTTP, web linking, and URLs
-* `$href` based on JSON Reference's `$ref`
-* `$embedded` uses the embedded resource behavior of `$id` in the about-to-be-publishd draft of JSON Schema
-* `$embedded` restricted to absolute-URIs (with scheme, without fragment)
-* JSON Pointer fragments not allowed to cross `$embedded`
-* Tentativley proposes `$header` to further describe resource relationships
-
-## JSON Schema Core draft-handrews-json-schema-01 (draft-07 clarification)
-{: numbered="false"}
-
-* {{?I-D.handrews-json-schema-01}}
-* `$id`-created plain name fragments described as "location-independent identifiers"
-*  Recommends that the root schema contain an absolute-URI `$id`
-*  Exhaustive schema identification examples showing all possible `$id`-crossing JSON Pointer fragments
-*  Replaced "external referencing" with how and when an implementation might know of a schema from another doucment
-*  Replaced "internal referencing" with how an implementation should recognized schema identifiers during parsing
-*  Dereferencing the former "internal" or "external" references is always the same process
-
-## JSON Schema Core draft-handrews-json-schema-00 (draft-07)
-{: numbered="false"}
-
-* {{?I-D.handrews-json-schema-00}}
-* Wording improvements for `$id`
-
-## AsyncAPI Specification v1.0.0
-{: numbered="false"}
-
-* {{async1.0}}
-* Uses extended subset of JSON Schema draft-wright-json-schema-00, without `id`, `definitions`, or JSON Schema's `$ref`
-* Uses JSON Reference draft-03, both inside and outside of schemas
-* Uses `components` at root level with typed sub-objects instead of `definitions`
-* Base URI not mentioned
-
-## OpenAPI Specification v3.0.0
-{: numbered="false"}
-
-* {{oas3.0}}
-* Uses extended subset of JSON Schema draft-wright-json-schema-00, without `id`, `definitions`, or JSON Schema's `$ref`
-* Uses JSON Reference draft-03, both inside and outside of schemas
-* Uses `components` at root level with typed sub-objects instead of `definitions`
-* Base URI not mentioned
-
-## JSON Schema Core draft-wright-json-schema-01 (draft-06)
-{: numbered="false"}
-
-* {{?I-D.wright-json-schema-01}}
-* `id` renamed to `$id`
-
-## JSON Schema Core draft-wright-json-schema-00 _(there is no draft-05)_
-{: numbered="false"}
-
-* {{?I-D.wright-json-schema-00}}
-* Returns `$ref` to this specification, value is a URI-reference
-* No special handling of fragments defined for `$ref`
-* `$ref` is "not a network locator, only an identifier"
-* `$ref` limited to schemas
-* Implementations SHOULD NOT assume a network operation for `$ref`
-* Defines `id` as setting the URI and base URI of the schema, as well as plain name fragments
-* Defines initial base URI in terms of RFC 3986
-* Shows JSON Pointer URI fragments that cross `id` as valid schema URIs
-* "Internal references" (SHOULD support) replaces "inline dereferencing"
-* "External references" (SHOULD support) replaces "canonical dereferencing"
-
-## OpenAPI (formerly known as Swagger) Specification v2.0
-{: numbered="false"}
-
-* {{oas2.0}}
-* Uses an extended subset of JSON Schema draft-04, without `id` or `definitions`
-* Uses JSON Reference draft-03, both inside and outside of schemas
-* Base URI not mentioned
-* Uses `definitions` at root level instead of within schemas
-
-## Swagger Specification v1.2
-{: numbered="false"}
-
-* {{swagger1.2}}
-* Adapts several keywords from JSON Schema draft-04, not including `id` or `definitions`
-* Uses `$ref` without noting a specific source, draft-04 uses JSON Reference so JSON Reference is assumed
-
-## JSON Schema Validation  draft-fge-json-schema-validation (draft-04)
-{: numbered="false"}
-
-* {{?I-D.fge-json-schema-validation-00}}
-* Introduces `definitions` keyword as "a standardized location for schema authors to inline JSON Schemas into a more general schema"
-
-## JSON Schema Core draft-zyp-json-schema-04 (draft-04)
-{: numbered="false"}
-
-* {{?I-D.zyp-json-schema-04}}
-* The only JSON Schema draft to defer `$ref` to the JSON Reference specification
-* `id` described as enabling "URI resolution scope alteration"
-* "Extends" JSON Reference by allowing `id` to change the base URI
-* "Extends" JSON Reference with "inline dereferencing" allowing non-JSON Pointer fragments
-* `id` now capable of defining plain name fragments
-* Defines optional "inline dereferencing" mechanism for implementations that "notice" `id` usage
-* Defines mandatory "canonical dereferencing" mechanism for retrieving reference targets
-
-## JSON Reference draft-pbryan-zyp-json-ref-03
-{: numbered="false"}
-
-* {{?I-D.pbryan-zyp-json-ref-03}}
-* `profile` media type parameter no longer defined
-* Schema for JSON Reference no longer defined
-
-## JSON Reference draft-pbryan-zyp-json-ref-02
-{: numbered="false"}
-
-* {{?I-D.pbryan-zyp-json-ref-02}}
-* Any properties adjacent to `$ref` SHALL be ignored
-
-## JSON Reference draft-pbryan-zyp-json-ref-01
-{: numbered="false"}
-
-* {{?I-D.pbryan-zyp-json-ref-01}}
-* JSON Reference contains a `$ref` property ("single property" no longer specified")
-* Objects that do not conform to this should not be treated as a JSON Reference
-* Implementations MAY choose to replace the JSON Reference with the target
-
-## JSON Reference draft-pbryan-zyp-json-ref-00
-{: numbered="false"}
-
-<!---
-  Do not use "?" on pbryan-zyp-json-ref-00 because this is a manual link, auto is broken
--->
-* {{I-D.pbryan-zyp-json-ref-00}}
-* `$ref` split out from JSON Schema: "This provides a basis for transclusion in JSON: the use of a target resource as an effective substitute for the reference."
-* Defines a JSON Reference as an object containing a single `$ref` property
-* Relative URI-reference performed relative to the referring document's base URI
-* Fragment resolved according to the referrant document
-* Fragment to be interpreted as JSON Pointer if referrant document is JSON
-* Defines media type parameter `profile=http://json-schema.org/json-ref` for `application/json`
-* Defines a schema `http://json-schema.org/json-ref`
-
-## JSON Schema draft-zyp-json-schema-03 (draft-03)
-{: numbered="false"}
-
-* {{?I-D.zyp-json-schema-03}}
-* `$ref` keyword introduced as "a URI of a schema that contains the full representation of this schema"
-* `$ref` behavior as replacing the current schema with the target "if known and available" and re-validating
-* `id` keyword introduced as "the current URI of this schema (this attribute is effectively a "self" link)"
-* `id` defines behavior of ineriting the URI from the parent schema if `id` not present in the current schema
-* Behavior of keywords adjacent to `$ref` not mentioned
-* Neither keyword uses the term "base URI"
-
-
