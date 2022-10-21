@@ -8,17 +8,24 @@ The contents of the following sections were chosen in a rather idiosyncratic man
 
 ## Notable discussions and issues
 
-* asyncapi/discussion #485: [Reference tooling discussion and requirements](https://github.com/orgs/asyncapi/discussions/485)
-* OAI/OpenAPI-Specification/discussion #3045: 
-* OAI/OpenAPI-Specification/issue #2936: [Compose all component types, not just schemas](https://github.com/OAI/OpenAPI-Specification/issues/2936)
-* OAI/OpenAPI-Specification/issue #2685: [OpenAPI bundling proposal](https://github.com/OAI/OpenAPI-Specification/issues/2685)
-* OAI/OpenAPI-Specification/issue #2635: [Ambiguity between Reference Object and PathItem Object](https://github.com/OAI/OpenAPI-Specification/issues/2635)
-* OAI/OpenAPI-Specification/issue #2038: [Internal references pointing out of the Components Object fixed fields](https://github.com/OAI/OpenAPI-Specification/issues/2038)
-* Numerous [APIDevTools/json-schema-ref-parser issues](https://github.com/APIDevTools/json-schema-ref-parser/issues) illustrate interoperability and implementation challenges, including but not limited to:
-    * APIDevTools/json-schema-ref-parser/issues #271: [Immediately circular schema causes a maximum call stack trace exception](https://github.com/APIDevTools/json-schema-ref-parser/issues/271)
-    * APIDevTools/json-schema-ref-parser/issues #200: [Fails to resolve correct path/filename for extended $ref](https://github.com/APIDevTools/json-schema-ref-parser/issues/200) (adjacent properties challenges)
-    * APIDevTools/json-schema-ref-parser/issues #199: [References to references resolve relative to self, not baseUrl](https://github.com/APIDevTools/json-schema-ref-parser/issues/199) (base URI properties challenges)
-    * APIDevTools/json-schema-ref-parser/issues #145: ["$id" and "$ref" changes in JSON Schema draft 2019-09 and OAS 3.1](https://github.com/APIDevTools/json-schema-ref-parser/issues/145)
+* **AsyncAPI**
+    * discussion #485: [Reference tooling discussion and requirements](https://github.com/orgs/asyncapi/discussions/485)
+* **OAI/OpenAPI-Specification**
+    * discussion #3045: [Path Item Object $ref - how does it work?](https://github.com/OAI/OpenAPI-Specification/issues/3045)
+    * issue #2936: [Compose all component types, not just schemas](https://github.com/OAI/OpenAPI-Specification/issues/2936)
+    * issue #2685: [OpenAPI bundling proposal](https://github.com/OAI/OpenAPI-Specification/issues/2685)
+    * issue #2635: [Ambiguity between Reference Object and PathItem Object](https://github.com/OAI/OpenAPI-Specification/issues/2635)
+    * issue #2038: [Internal references pointing out of the Components Object fixed fields](https://github.com/OAI/OpenAPI-Specification/issues/2038)
+* **ietf-wg-httpapi/mediatypes**
+    * issue #2: [Define fragment identifier specifications for OAS / Schema](https://github.com/ietf-wg-httpapi/mediatypes/issue/2)
+    * issue #50: [+yaml fragment parsing compatibility](https://github.com/ietf-wg-httpapi/mediatypes/issues/50)
+* **ietf-wg-jsonpath/draft-ietf-jsonpath-base**
+    * issue #124: [JsonInclude Processing Extension](https://github.com/ietf-wg-jsonpath/draft-ietf-jsonpath-base/issue/124)
+* **APIDevTools/json-schema-ref-parser** [numerous issues](https://github.com/APIDevTools/json-schema-ref-parser/issue) illustrate interoperability and implementation challenges, including but not limited to:
+    * issue #271: [Immediately circular schema causes a maximum call stack trace exception](https://github.com/APIDevTools/json-schema-ref-parser/issue/271)
+    * issue #200: [Fails to resolve correct path/filename for extended $ref](https://github.com/APIDevTools/json-schema-ref-parser/issue/200) (adjacent properties challenges)
+    * issue #199: [References to references resolve relative to self, not baseUrl](https://github.com/APIDevTools/json-schema-ref-parser/issue/199) (base URI properties challenges)
+    * issue #145: ["$id" and "$ref" changes in JSON Schema draft 2019-09 and OAS 3.1](https://github.com/APIDevTools/json-schema-ref-parser/issue/145)
 
 
 ## Select tools and their features
