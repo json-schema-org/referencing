@@ -197,10 +197,6 @@ If the object containing the `$id` property is not the root object of the docume
 
 The value of the `$anchor` property MUST be a string, and MUST be a valid IRI fragment according to the `ifragment` ABNF production in {{!RFC3987, Section 2.2}}.
 
-Context specifications that do not define media types, or that define media types without a defined fragment syntax, SHOULD NOT incorporate `$anchor` into the specification.
-
-Context media types that define a fragment syntax SHOULD further constrain the syntax of `$anchor` to the set of fragments valid for that media type.  Any fragment syntax that correlates with the inherent structure of the document SHOULD be forbidden to avoid defining a fragment that conflicts with the document structure.
-
 ### Location
 
 Many data formats perform some sort of action for each object that might contain JRI keywords.  For example, JSON Schema allows JRI keywords in schema objects, but most schema objects are automatically applied to instances.  To facilitate re-use, such formats need a location where re-usable objects can be stored without causing an action to happen unless and until they are referenced.
@@ -211,9 +207,7 @@ Context specifications will likely define their own such keywords, such as the `
 
 #### `$defs`
 
-The value of the `$defs` property MUST be an object, which MUST have objects as the values of all of its properties.
-
-If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under `$defs` SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.  This is necessary to support bundling, which places resource root objects under `$defs`
+The value of the `$defs` property MUST be an object, which MUST have objects as the values of all of its properties.  JRI keywords MUST be allowed in these objects.
 
 ### Referencing
 
@@ -375,6 +369,16 @@ A context-independent bundling tool can un-bundle a document meeting the followi
 A context specification incorporates JRI into a data format that describes JSON Pointer-compatible documents.  Such a specification MUST normatively reference this specification, and MUST specify any relevant context-specific requirements that this specification defers to context specifications.[^3]
 
 [^3]: Should a root object be mandated?  If not, how much variation to accommondate.  Should a root object have to allow JRI keywords?  **No, because OAS does not (and probably AsyncAPI does not either).**
+
+## Fragments and secondary resources
+
+Context specifications that do not define media types, or that define media types without a defined fragment syntax, SHOULD NOT incorporate `$anchor` into the specification.
+
+Context media types that define a fragment syntax SHOULD further constrain the syntax of `$anchor` to the set of fragments valid for that media type.  Any fragment syntax that correlates with the inherent structure of the document SHOULD be forbidden to avoid defining a fragment that conflicts with the document structure.
+
+## Locations {#context-loc}
+
+If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under under location keywords SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.
 
 ## Incorporating a subset of JRI
 
