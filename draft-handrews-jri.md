@@ -148,9 +148,17 @@ A resource MAY (and likely will) have multiple IRIs, but there is no way for an 
 
 ## JRI Keywords
 
+JRI defines keywords in three behavior categories:
+
+* Identifiers, which assign IRIs to primary or secondary resources and (for primary resources) set the resource's base IRI
+* Locations, which indicate which locations are referenceable and can contain identifiers
+* References, which link one part of a document to another part of the same document or to a different document
+
+Context specifications MAY define their own keywords or other mechanisms within these three categories, as discussed in {{context}}.  They also MAY restrict reference targets to those identified by JRI and/or context specification identifier or location keywords.
+
 ### General syntax
 
-JRI keywords are defined with names and values representable as {{?RFC3629}} UTF-8 strings, with keyword names representable in {{?RFC20}} ASCII.  As such, they can be used as object properties in interoperable JSON documents as precribed by {{?RFC8259, Sections 4, 7, and 8.1}}, as well as any other JSON Pointer-compatible documents.
+JRI keyword names and string values are defined to be representable as {{?RFC3629}} UTF-8 strings, with keyword names representable in {{?RFC20}} ASCII.  As such, JRI keywords can be used as object properties in interoperable JSON documents as precribed by {{?RFC8259, Sections 4, 7, and 8.1}}, as well as in any other JSON Pointer-compatible data formats.
 
 JRI keywords MAY be used in data formats that are only capable of representing a subset of UTF-8 string values, with the obvious limitation that only the representable subset of JRI keyword values will be usable.
 
@@ -170,16 +178,14 @@ However, `$comment` is not itself considered to be a JRI keyword.  JRI does not 
 
 ### Evaluation order
 
-JRI defines several keywords, which fall into the categories of identification (`$id`, `$anchor`), location (`$defs`), and referencing (`$ref`).  These keywords MUST be evaluated in the following order when present:
+JRI behaviors, whether implemented by JRI keywords or by context specification features, MUST be evaluated in the following order when present:
 
-1. `$id`, which assigns an IRI to a primary resource, and sets it as the resource's base IRI
-1. `$anchor`, which assigns a fragment identifier to a secondary resource
-1. `$defs`, which provides a location for reference targets
-1. `$ref`, which references another resource using an IRI-reference
+1. Primary resource identifiers (`$id`)
+1. Secondary resource identifiers (`$anchor`)
+1. Locations (`$defs`)
+1. References (`$ref`, `$extRef`)
 
-The logic of this ordering is that primary resources must be identified as all other keywords depend having the correct base IRI.  Secondary resources and other possible nested reference targets must be located and identified before attempting to reference them.  And fragment-like functionality requires having first found the target resource to which the functionality will be applied.
-
-To ensure that as many references as possible are resolvable within a set of documents, all identification and location keywords within those documents SHOULD be processed prior to processing any reference keywords.
+The logic of this ordering is that primary resources must be identified first as all other keywords depend having the correct base IRI.  Next, secondary resources can be identifed once the primary resource is known.  Finally, nested locations which can be reference targets or have additional identifier keywords can be discovered within the primary resource.
 
 ### Identification
 
@@ -364,7 +370,7 @@ A context-independent bundling tool can un-bundle a document meeting the followi
 * The root object MUST contain `$defs`, and each bundled resource MUST be embedded in the `$defs` object; the names of the `$defs` properties are irrelevant
 * If the embedded resources' `$id` values are relative IRI-reference, the root object MAY contain an absolute-IRI `$id` so that the resources can be bundled and un-bundled without changing their `$id`s; when un-bundled, such resources are expected to be in a directory structure appropriate to their `$id`s relative to the shared base
 
-# Incorporating JRI into a context specification
+# Incorporating JRI into a context specification {#context}
 
 A context specification incorporates JRI into a data format that describes JSON Pointer-compatible documents.  Such a specification MUST normatively reference this specification, and MUST specify any relevant context-specific requirements that this specification defers to context specifications.[^3]
 
