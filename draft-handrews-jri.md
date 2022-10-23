@@ -205,15 +205,17 @@ The value of the `$anchor` property MUST be a string, and MUST be a valid IRI fr
 
 ### Location
 
-Many data formats perform some sort of action for each object that might contain JRI keywords.  For example, JSON Schema allows JRI keywords in schema objects, but most schema objects are automatically applied to instances.  To facilitate re-use, such formats need a location where re-usable objects can be stored without causing an action to happen unless and until they are referenced.
+Location behavior is necessary when not all locations within a data format are valid reference targets, or when object properties that appear to be JRI keywords are only actually JRI keywords in certain locations.  In formats where most locations cause automatic actions (such as applying a schema to an instance), location behavior can also create areas where the automatic actions do not apply.  These reserved locations can safely hold re-usable objects separate from any single use.
 
-Context specifications will likely define their own such keywords, such as the `components` keyword used in both OpenAPI {{oas3.1}} and AsyncAPI {{async2.0}}, which has subsections for different component types.  Using the JRI standard location keyword (`$defs`) is not required, but enables safe interoperable bundling by standalone tools as described in {{bundling-interop}}.[^70]
+The passive nature of location behavior makes it particularly suitable to be defined directly by context specifications, as noted in {{context-loc}}.  However, not all uses of JRI involve a context specification.
+
+JRI reserves the `$defs` keyword in order to make no-automatic-action location behavior available within the `$`-prefixed namespace.  This keyword also enables safe interoperable bundling by standalone tools as described in {{bundling-interop}}.[^70]
 
 [^70]: It's also possible to bundle documents that do not use `$defs` into a document that does, and can therefore be un-bundled by a generic bundling tool.  I'm not sure of the best way to talk about that, as I did not want to get into defining a bundling media type.
 
 #### `$defs`
 
-The value of the `$defs` property MUST be an object, which MUST have objects as the values of all of its properties.  JRI keywords MUST be allowed in these objects.
+The value of the `$defs` property MUST be an object, which MUST have objects as the values of all of its properties.  JRI keywords MUST be allowed in these objects.  Aside from their use in JSON Pointers or similar structural identifiers, the property names within the `$defs` object MUST NOT be considered to impose specific semantics to the property values.
 
 ### Referencing
 
@@ -383,6 +385,10 @@ Context specifications that do not define media types, or that define media type
 Context media types that define a fragment syntax SHOULD further constrain the syntax of `$anchor` to the set of fragments valid for that media type.  Any fragment syntax that correlates with the inherent structure of the document SHOULD be forbidden to avoid defining a fragment that conflicts with the document structure.
 
 ## Locations {#context-loc}
+
+Context specifications MAY define location keywords that impose specific semantics within their values.  This is demonstrated by the `components` keyword used in both OpenAPI {{oas3.1}} and AsyncAPI {{async2.0}}, which has subsections for different component types.
+
+Context specifications MAY assign location behavior to keywords with other behaviors.  JSON Schema's inline applicator keywords {{?I-D.bhutton-json-schema-01, Section 7.5}} demonstrate this approach.
 
 If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under under location keywords SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.
 
