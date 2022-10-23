@@ -259,6 +259,14 @@ Context specifications that use keyword-level semantics SHOULD ensure that, in t
 
 For example, in JSON Schema, replacing an object that contains only `$ref` is guaranteed to not change the validation outcome, and only changes the evaluation path of annotations.  Since the presence of `$ref` in the evaluation path is used to determine whether keywords are present adjacent to `$ref`, omitting it when no such adjacent keywords are present is safe.  While JSON Schema specifies keyword-level semantics, a tool that replaced `$ref`-only objects with their targets according to object-level semantics prior to JSON Schema evaluation would not break the schema's behavior.
 
+## Extending JRI {#extending}
+
+[^40]
+
+[^40]: This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent kewyords can disambiguate semantics _within the context usage_ but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.
+
+Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.
+
 # Standalone JRI implementations
 
 By definition, a standalone JRI implementation is an implementation that, in its default configuration, can only correctly process JRI in context-independent documents.
@@ -414,7 +422,7 @@ It is RECOMMENDED that context formats with functionality that overlaps with JRI
 
 For further interoperability concerns see {{interop-overlap}}.
 
-### Processing JRI keywords alongside of context specification keywords
+## Processing JRI keywords alongside of context specification keywords
 
 Context specifications that define keywords with analogous functionality to JRI keywords SHOULD process each of them at the same point in the processing order as their analogous JRI keyword.  Changing the ordering of identifiers and references in particular is likely to produce counter-intuitive behavior, and reduces the interoperability of the JRI keywords with tools that are not context-aware.
 
@@ -422,15 +430,7 @@ Context specifications that define keywords with other behaviors MAY define any 
 
 JRI referencing is only interoperable if all non-JRI keywords (other than those overlapping in functionality with JRI identifiers and locations) are processed after JRI referencing keywords.  However, the semantics of keywords appearing alongside of JRI references is determined by context specifications, which therefore MAY define other ordering requirements.
 
-## Extending JRI {#extending}
-
-[^40]
-
-[^40]: This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent kewyords can disambiguate semantics _within the context usage_ but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.
-
-Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.
-
-### Disambiguating reference semantics {#disambiguator}
+## Disambiguating reference semantics {#disambiguator}
 
 Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
 
