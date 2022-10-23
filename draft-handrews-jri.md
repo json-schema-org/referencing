@@ -84,6 +84,8 @@ The terms "IRI", "IRI-reference", "relative reference", "absolute-IRI", and "bas
 
 ## Definitions
 
+In addition to the terms from other specifications listed in the previous section, this document uses the following terminology:
+
 * _data format:_ any specification for structuring data within a document, including but not limited to formal media types
 * _JSON-based format:_ any data format using {{?RFC8259}} JSON as its syntax, including but not limted to formats defined with an `application/json` or `+json` structured suffix media type
 * _JSON Pointer-compatible document:_ any document with a structure that can be unambiguously addressed by JSON Pointer as described in {{jsonpointer}}
