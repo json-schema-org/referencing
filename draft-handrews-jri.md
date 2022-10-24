@@ -229,9 +229,9 @@ By default, the reference target MAY be assumed to be of whatever media type wou
 
 #### `$extRef`
 
-To avoid overloading the behavior of `$ref` or relying on non-interoperable context-specific behavior, `$extRef` (for "extensible reference") allows specifying additional metadata as well as alternative mechanisms for secondary resource identifiecation.[^90]
+To avoid overloading the behavior of `$ref` or relying on non-interoperable context-specific behavior, `$extRef` (for "extensible reference") allows specifying additional metadata as well as alternative mechanisms for secondary resource identification.[^90]
 
-[^90]: It is not yet clear how this should work.  I have asked the AsyncAPI team some clarifying questions.  An object value in which an IRI (without fragment) is provided in one member, and a (non-fragment) JSON Pointer or other fragment-substitute is provided in another would seem to solve some problems.  However, there is also a need to set a per-reference media type, and such a media type might have a fragment syntax.  We also don't want it to be easy to define both a fragment and a fragment alternative in the same reference, as the result of that would be unintuitive at best.  This is why I dropped `$refPtr` as a modifier of `$ref` (plus it made it impossible to guarantee that `$ref` was being evaluated properly without knowing more than otherwise necessary about how a document uses JRI.
+[^90]: It is not yet clear how this should work, or how many meta-data sub-keywords should be defined in this specification.  I have asked the AsyncAPI team some clarifying questions.  An object value in which an IRI (without fragment) is provided in one member, and a (non-fragment) JSON Pointer or other fragment-substitute is provided in another would seem to solve some problems.  However, there is also a need to set a per-reference media type, and such a media type might have a fragment syntax.  We also don't want it to be easy to define both a fragment and a fragment alternative in the same reference, as the result of that would be unintuitive at best.
 
 #### Reference semantics {#ref-semantics}
 
@@ -243,15 +243,9 @@ With object-level semantics, an object containing a JRI reference keyword is eff
 
 Object-level semantics are generally safe to assume when the object only contains JRI reference keywords.  Context specifications SHOULD ensure this safety even if their intended reference semantics are keyword-level.
 
-Object-level replacement MAY be implemented by producing a copy of the source document with the reference object replaced by the contents of its target.  When a reference target itself contains references, an implementation MUST replace all references in the target prior to replacing the source reference with the target or otherwise keep track of the resolution context to avoid improperly evaluating a relative reference.
-
 ##### Keyword-level semantics {#keyword-level}
 
-With keyword-level semantics, a JRI reference keyword remains part of the evaluation path, and has the effect of evaluating its target in the current context, as defined by the context specification.  Context specifications MAY define how such effects are combined with the effects of non-JRI keywords in the same object as the JRI reference keywords.  Such combined effects MUST NOT involve changing the behavior of JRI keywords to conflict with this specification in any way.
-
-There is no universally safe way to edit a document containing a reference to contain the reference target instead, even without circular references, although context specifications MAY define such edits.[^30]
-
-[^30]: At one point in JSON Schema spec development, we discussed allowing reference "removal" by replacing `$ref` and its IRI value with `$inline` and the reference target value.  This allows inlining at the keyword level without needing to understand a context specification.  `$inline` was essentially a one-element `allOf` that conveyed that a reference had been inlined.  Is this worth reviving in JRI?  Doing so would not force JSON Schema to adopt it.  One complexity would be that if there are multiple JRI reference keywords, we would either need one inlinng keyword per reference if we want it to be reversible, or `$inline` would have to support meta-data along with the target.
+With keyword-level semantics, a JRI reference keyword remains part of the evaluation path, and has the effect of evaluating its target in the current context, as defined by the context specification.  See {{context-ref}} for futher guidance.
 
 ##### Falling back to object-level semantics
 
@@ -356,6 +350,8 @@ A common family of use cases involves reading one or more JRI-using documents an
 
 This use case attempts to remove all references with object-level semantics by replacing the reference objects with their targets, resulting in a plain JSON (or other underlying format) document that requires no knowledge of JRI.
 
+Object-level replacement MAY be implemented by producing a copy of the source document with the reference object replaced by the contents of its target.
+
 Removing references from a set of documents with differing base IRIs, or involving fragments that are to be resolved within a specific primary resource carries additional restrictions.  References MUST be traversed in a depth-first fashion and removed from the leaf to the root, so that each removal takes place in the proper primary resource context and with the proper base IRI.
 
 #### Bundling to JSON Pointer fragment references only
@@ -396,6 +392,18 @@ Context specifications MAY assign location behavior to keywords with other behav
 
 If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under under location keywords SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.
 
+## References and adjacent keywords {#context-ref}
+
+Context specifications MAY define how such reference effects are combined with the effects of non-JRI keywords in the same object as the JRI reference keywords.  Such combined effects MUST NOT involve changing the behavior of JRI keywords to conflict with this specification in any way.
+
+There is no universally safe way to edit a document containing a reference to contain the reference target instead, even without circular references, although context specifications MAY define such edits.[^30]
+
+[^30]: At one point in JSON Schema spec development, we discussed allowing reference "removal" by replacing `$ref` and its IRI value with `$inline` and the reference target value.  This allows inlining at the keyword level without needing to understand a context specification.  `$inline` was essentially a one-element `allOf` that conveyed that a reference had been inlined.  Is this worth reviving in JRI?  Doing so would not force JSON Schema to adopt it.  One complexity would be that if there are multiple JRI reference keywords, we would either need one inlinng keyword per reference if we want it to be reversible, or `$inline` would have to support meta-data along with the target.
+
+### Disambiguating reference semantics {#disambiguator}
+
+Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
+
 ## Incorporating a subset of JRI
 
 Since, as noted in {{iri-behavior}}, JRI keywords do not directly interact with each other, context specifications MAY restrict their usage of JRI in any of the following ways:
@@ -425,10 +433,6 @@ Context specifications that define keywords with analogous functionality to JRI 
 Context specifications that define keywords with other behaviors MAY define any processing order for them.  However, it is RECOMMENDED that any keywords that might be impacted by the behavior of JRI identifier and location keywords be processed after those keywords.
 
 JRI referencing is only interoperable if all non-JRI keywords (other than those overlapping in functionality with JRI identifiers and locations) are processed after JRI referencing keywords.  However, the semantics of keywords appearing alongside of JRI references is determined by context specifications, which therefore MAY define other ordering requirements.
-
-## Disambiguating reference semantics {#disambiguator}
-
-Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
 
 # Relationship to Web Linking
 
