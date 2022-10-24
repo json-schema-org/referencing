@@ -32,7 +32,7 @@ We are hosting this process, which we expect to involve several competing ideas 
 
 This repository is also a place to discuss the process and format of this work, and how it can and should interact with other projects.
 
-Due to the focus on interoperability, the initial assumption is to produce IETF RFCs.  If we want to quickly produce an authoritative document covering current behavior, an [informational RFC]() might be appropriate.  This would not preclude other aspects becoming standards-track RFCs in the future.
+Due to the focus on interoperability, the initial assumption is to produce IETF RFCs.  If we want to quickly produce an authoritative document covering current behavior, an [informational RFC](https://www.ietf.org/standards/process/informational-vs-experimental/) might be appropriate.  This would not preclude other aspects becoming standards-track RFCs in the future.
 
 ## Format
 
