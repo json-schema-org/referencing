@@ -3,7 +3,7 @@ title: JSON Reference and Identification
 abbrev:
 docname: draft-handrews-jri-latest
 workgroup: Internet Engineering Task Force
-submissionType: independent
+submissionType: IETF
 category: info
 
 ipr: trust200902
