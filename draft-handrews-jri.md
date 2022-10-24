@@ -138,7 +138,7 @@ Defining a default base IRI as allowed by {{!RFC3986, Section 5.1.4}} is deferre
 
 ### Identifiers vs Locators {#id-vs-loc}
 
-IRIs used in JRI keywords are identifiers and not necessarily locators, even if they specify a scheme indicating a protocol suitable for resource retrieval.  Context specifications SHOULD indicate under what circumstances a reference can be treated as a locator and retrieved on demand, and address the security concerns related to automatic retrieval.
+IRIs used in JRI keywords are identifiers (IRIs/URIs) and not necessarily locators (IRLs/URLs), even if they specify a scheme indicating a protocol suitable for resource retrieval.  Context specifications SHOULD indicate under what circumstances a reference can be treated as a locator and retrieved on demand, and address the security concerns related to automatic retrieval.
 
 Standalone implementations of context-independent JRI MUST NOT attempt to automatically retrieve references by default.  They MAY offer a configuration option to do so, and MAY offer a mechanism to register handlers based on the IRI scheme or other IRI components.
 
