@@ -273,7 +273,51 @@ By definition, a standalone JRI implementation is an implementation that, in its
 
 Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document tha does not conform to the relevant context specification.
 
-## Implementing a standalone subset of JRI
+## The interoperable JRI Subset
+
+Context-independent interoperability places several additional requirements on any document that needs to be processed by a context-independent JRI implementation.  Most of these requirements are not enforceable by a context-independent implementation.  Users of context-independent implementations MUST NOT expect documents that violate these requirements to be detected by the implementation, and MUST NOT expect predictable, interoperable behavior
+from processing such documents.
+
+A document that can be interoperably processed by a context-independent JRI implementation will be referred to in this section as a _context-independent document_.  A data format for which all valid documents are context-independent documents will be referred to in this section as a _context-independent format._
+
+The requirements below are stated for context-independent formats.  A document in a non-context-indpendent format can be context-independent if it avoids using any features forbidden by the context-independent format requirements.
+
+### Restricting base IRI changes and IRI assignment {#interop-overlap}
+
+A context-independent format MUST NOT offer features for assigning IRIs to primary or secondary resources, or changing the base IRI from within a document.
+
+A context-independent document MUST NOT use any such features if the data format offers them.
+
+### Recognizing JRI keywords
+
+The property names in the value of `$defs` are known to be non-keyword properties as this object syntax is defined by JRI.  These property names therefore MUST be considered exempt from the other requirements in this section regarding property names.
+
+A context-independent format MUST NOT allow object properties with names matching JRI keywords and values that appear valid for that keyword that are not intended to function as JRI keywords anywhere within the format.
+
+Note that as JRI implementations are not required to validate keyword values, simply having the correct value type (e.g. string) is enough to make such a keyword appear to be a valid JRI keyword.  Context-independent JRI implementations MAY offer a non-default configuration option to validate potential JRI keyword values and ignore (rather than treat as an error) those that do not have valid values.
+
+### Ensuring consistent reference semantics
+
+A context-independent format MUST NOT allow any non-JRI-reference keywords in the same object as any JRI reference keyword.[^11]
+
+[^11]: Should we allow a context-independent format to allow non-JRI keywords in reference objects as long as it mandates that they are, in all circumstances, ignored?  Aside from `$comment`, this seems like asking for trouble, and OpenAPI and AsyncAPI notably forbid any properties other than `$ref` in their Reference Objects.  But it would be closer to JSON Reference behavior.
+
+### Finding JRI identifiers
+
+A context-independent format MUST NOT allow JRI identifiers anywhere other than its root object or under a `$defs` keyword appearing (recursively) in the root object.[^10]
+
+[^10]:Alternatively, we could treat them like the reference keywords and require that they be allowed anywhere.  Neither approach works with JSON Schema, but the JSON Schema vocabulary for JRI proposed in a later section would provide a way to do so.
+
+A context-independent document MUST NOT use JRI identifiers outside of these locations.
+
+### Interoperable bundling and un-bundling {#bundling-interop}
+
+A context-independent bundling tool can un-bundle a document meeting the following requirements:
+
+* The root object MUST contain `$defs`, and each bundled resource MUST be embedded in the `$defs` object; the names of the `$defs` properties are irrelevant
+* If the embedded resources' `$id` values are relative IRI-reference, the root object MAY contain an absolute-IRI `$id` so that the resources can be bundled and un-bundled without changing their `$id`s; when un-bundled, such resources are expected to be in a directory structure appropriate to their `$id`s relative to the shared base
+
+## Implementing a subset of interoperable JRI
 
 The popularity of tools devoted only to processing `$ref` demonstrates a substantial market for simple standalone implementations of a JRI subset.  Standalone implementations that only support a subset of JRI MUST NOT claim to be full implementations of JRI, and MUST document what subset is supported.
 
@@ -335,50 +379,6 @@ Unlike the previous two use cases, this type of bundling can be un-bundled.  An 
 This use case aims to present a set of linked documents as if no references were present at all (if object-level semantics are used), or as if the reference values are their targets rather than IRIs (if keyword-level semantics are used).  Typically, this involves some sort of lazy proxy object to ensure cyclic references do not automatically cause infinite recursion.
 
 Depending on the intended scope of support (e.g. a single self-referential document vs document sets that link to each other and possibly external resources), this use case can benefit from being implemented on top of a JRI cache.
-
-## The interoperable JRI Subset
-
-Context-independent interoperability places several additional requirements on any document that needs to be processed by a context-independent JRI implementation.  Most of these requirements are not enforceable by a context-independent implementation.  Users of context-independent implementations MUST NOT expect documents that violate these requirements to be detected by the implementation, and MUST NOT expect predictable, interoperable behavior
-from processing such documents.
-
-A document that can be interoperably processed by a context-independent JRI implementation will be referred to in this section as a _context-independent document_.  A data format for which all valid documents are context-independent documents will be referred to in this section as a _context-independent format._
-
-The requirements below are stated for context-independent formats.  A document in a non-context-indpendent format can be context-independent if it avoids using any features forbidden by the context-independent format requirements.
-
-### Restricting base IRI changes and IRI assignment {#interop-overlap}
-
-A context-independent format MUST NOT offer features for assigning IRIs to primary or secondary resources, or changing the base IRI from within a document.
-
-A context-independent document MUST NOT use any such features if the data format offers them.
-
-### Recognizing JRI keywords
-
-The property names in the value of `$defs` are known to be non-keyword properties as this object syntax is defined by JRI.  These property names therefore MUST be considered exempt from the other requirements in this section regarding property names.
-
-A context-independent format MUST NOT allow object properties with names matching JRI keywords and values that appear valid for that keyword that are not intended to function as JRI keywords anywhere within the format.
-
-Note that as JRI implementations are not required to validate keyword values, simply having the correct value type (e.g. string) is enough to make such a keyword appear to be a valid JRI keyword.  Context-independent JRI implementations MAY offer a non-default configuration option to validate potential JRI keyword values and ignore (rather than treat as an error) those that do not have valid values.
-
-### Ensuring consistent reference semantics
-
-A context-independent format MUST NOT allow any non-JRI-reference keywords in the same object as any JRI reference keyword.[^11]
-
-[^11]: Should we allow a context-independent format to allow non-JRI keywords in reference objects as long as it mandates that they are, in all circumstances, ignored?  Aside from `$comment`, this seems like asking for trouble, and OpenAPI and AsyncAPI notably forbid any properties other than `$ref` in their Reference Objects.  But it would be closer to JSON Reference behavior.
-
-### Finding JRI identifiers
-
-A context-independent format MUST NOT allow JRI identifiers anywhere other than its root object or under a `$defs` keyword appearing (recursively) in the root object.[^10]
-
-[^10]:Alternatively, we could treat them like the reference keywords and require that they be allowed anywhere.  Neither approach works with JSON Schema, but the JSON Schema vocabulary for JRI proposed in a later section would provide a way to do so.
-
-A context-independent document MUST NOT use JRI identifiers outside of these locations.
-
-### Interoperable bundling and un-bundling {#bundling-interop}
-
-A context-independent bundling tool can un-bundle a document meeting the following requirements:
-
-* The root object MUST contain `$defs`, and each bundled resource MUST be embedded in the `$defs` object; the names of the `$defs` properties are irrelevant
-* If the embedded resources' `$id` values are relative IRI-reference, the root object MAY contain an absolute-IRI `$id` so that the resources can be bundled and un-bundled without changing their `$id`s; when un-bundled, such resources are expected to be in a directory structure appropriate to their `$id`s relative to the shared base
 
 # Incorporating JRI into a context specification {#context}
 
