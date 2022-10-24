@@ -267,7 +267,7 @@ By definition, a standalone JRI implementation is an implementation that, in its
 
 Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document tha does not conform to the relevant context specification.
 
-## The interoperable JRI Subset
+## The interoperable JRI Subset {#interop-subset}
 
 Context-independent interoperability places several additional requirements on any document that needs to be processed by a context-independent JRI implementation.  Most of these requirements are not enforceable by a context-independent implementation.  Users of context-independent implementations MUST NOT expect documents that violate these requirements to be detected by the implementation, and MUST NOT expect predictable, interoperable behavior
 from processing such documents.
@@ -447,6 +447,8 @@ The following keywords are roughly analogous to web links:
 In the absence of other link metadata or context specification guidance, the target of a reference keyword MAY be treated as carrying a target media type hint (as in {{?RFC8288, Section 3.4.1}}) suggesting that the target media type is identical to the media type of the document containing the reference.
 
 # Interoperability Considerations {#interop}
+
+See also {{interop-subset}}.
 
 ## JRI behavior negotiation
 
