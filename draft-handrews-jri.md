@@ -64,7 +64,7 @@ Discussion of this draft takes place in the [GitHub repository](https://github.c
 
 # Introduction
 
-JSON Reference and Identification (JRI) offers a modular set of features to enable interoperable support of identification and referencig across a wide range of formats.  These features are necessary to create data formats across a set of linked documents, but are often incidental to the primary functionality of a data format specification.  Offloading these features to common libraries and tools based on a standardized approach allows data format implementations to focus on the format's purpose with minimal need to understand complex and potentially multi-document structures.
+JSON Reference and Identification (JRI) offers a modular set of features to enable interoperable support of identification and referencing across a wide range of formats.  These features are necessary to create data formats across a set of linked documents, but are often incidental to the primary functionality of a data format specification.  Offloading these features to common libraries and tools based on a standardized approach allows data format implementations to focus on the format's purpose with minimal need to understand complex and potentially multi-document structures.
 
 Standalone JRI use cases include a variety of document transformations, transparent in-memory representations of linked documents, and locating, caching, and serving resources identified within or referenced from a set of documents.
 
@@ -87,7 +87,7 @@ The terms "IRI", "IRI-reference", "relative reference", "absolute-IRI", and "bas
 In addition to the terms from other specifications listed in the previous section, this document uses the following terminology:
 
 * _data format:_ any specification for structuring data within a document, including but not limited to formal media types
-* _JSON-based format:_ any data format using {{?RFC8259}} JSON as its syntax, including but not limted to formats defined with an `application/json` or `+json` structured suffix media type
+* _JSON-based format:_ any data format using {{?RFC8259}} JSON as its syntax, including but not limited to formats defined with an `application/json` or `+json` structured suffix media type
 * _JSON Pointer-compatible document:_ any document with a structure that can be unambiguously addressed by JSON Pointer as described in {{jsonpointer}}
 * _root object:_ the object, if any, containing the entirety of a JSON-compatible document[^2]
 * _keyword:_ an object property name with specification-defined behavior, as opposed to object properties which are simply data
@@ -132,7 +132,7 @@ To support the full base IRI determination process defined in {{!RFC3987, Sectio
 
 Such a base IRI is necessary if the implementation encounters a relative IRI-reference prior to determining a non-relative a base IRI defined within the content.  It is assumed that any provided base IRI has been determined in accordance with the relevant specifications.
 
-An implementation that does not meet either of the above critiria yet still disregards this recommendation MUST document the limitation and treat unresolvable relative references as an error.
+An implementation that does not meet either of the above criteria yet still disregards this recommendation MUST document the limitation and treat unresolvable relative references as an error.
 
 Defining a default base IRI as allowed by {{!RFC3986, Section 5.1.4}} is deferred to context specifications.
 
@@ -158,7 +158,7 @@ Context specifications MAY define their own keywords or other mechanisms within 
 
 ### General syntax
 
-JRI keyword names and string values are defined to be representable as {{?RFC3629}} UTF-8 strings, with keyword names representable in {{?RFC20}} ASCII.  As such, JRI keywords can be used as object properties in interoperable JSON documents as precribed by {{?RFC8259, Sections 4, 7, and 8.1}}, as well as in any other JSON Pointer-compatible data formats.
+JRI keyword names and string values are defined to be representable as {{?RFC3629}} UTF-8 strings, with keyword names representable in {{?RFC20}} ASCII.  As such, JRI keywords can be used as object properties in interoperable JSON documents as prescribed by {{?RFC8259, Sections 4, 7, and 8.1}}, as well as in any other JSON Pointer-compatible data formats.
 
 JRI keywords MAY be used in data formats that are only capable of representing a subset of UTF-8 string values, with the obvious limitation that only the representable subset of JRI keyword values will be usable.
 
@@ -185,7 +185,7 @@ JRI behaviors, whether implemented by JRI keywords or by context specification f
 1. Locations (`$defs`)
 1. References (`$ref`, `$extRef`)
 
-The logic of this ordering is that primary resources must be identified first as all other keywords depend having the correct base IRI.  Next, secondary resources can be identifed once the primary resource is known.  Finally, nested locations which can be reference targets or have additional identifier keywords can be discovered within the primary resource.
+The logic of this ordering is that primary resources must be identified first as all other keywords depend having the correct base IRI.  Next, secondary resources can be identified once the primary resource is known.  Finally, nested locations which can be reference targets or have additional identifier keywords can be discovered within the primary resource.
 
 ### Identification
 
@@ -245,7 +245,7 @@ Object-level semantics are generally safe to assume when the object only contain
 
 ##### Keyword-level semantics {#keyword-level}
 
-With keyword-level semantics, a JRI reference keyword remains part of the evaluation path, and has the effect of evaluating its target in the current context, as defined by the context specification.  See {{context-ref}} for futher guidance.
+With keyword-level semantics, a JRI reference keyword remains part of the evaluation path, and has the effect of evaluating its target in the current context, as defined by the context specification.  See {{context-ref}} for further guidance.
 
 ##### Falling back to object-level semantics
 
@@ -257,7 +257,7 @@ For example, in JSON Schema, replacing an object that contains only `$ref` is gu
 
 [^40]
 
-[^40]: This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent kewyords can disambiguate semantics _within the context usage_ but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.
+[^40]: This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent keywords can disambiguate semantics _within the context usage_ but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.
 
 Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.
 
@@ -265,7 +265,7 @@ Rather than being directly extensible, JRI is intended to work alongside other s
 
 By definition, a standalone JRI implementation is an implementation that, in its default configuration, can only correctly process JRI in context-independent documents.
 
-Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document tha does not conform to the relevant context specification.
+Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document that does not conform to the relevant context specification.
 
 ## The interoperable JRI Subset {#interop-subset}
 
@@ -313,13 +313,13 @@ The popularity of tools devoted only to processing `$ref` demonstrates a substan
 
 ## JRI Applications
 
-JRI exists to faciliated interoperable tooling.  Therefore, several common applications of JRI here are described to encourage common functionality.
+JRI exists to facilitated interoperable tooling.  Therefore, several common applications of JRI here are described to encourage common functionality.
 
 ### Locating, caching, and serving resources
 
 A primary use case for JRI involves removing the need for downstream tools to track base IRIs and retrieve identified resources.  We will refer to a tool that fulfills this use case as a _JRI cache_.  In this use case, downstream tooling still encounters JRI references, but they have already been resolved to full IRIs (with a scheme), and the implementation resolves all IRIs by requesting them from the JRI cache.
 
-Depending on the exact functionality offered, the "cache" could be as simple as a look-up table.  It could also perform actual cachign tasks such as managing a working set in limited memory, or integrating with a caching system such as one offered by HTTP clients in accordance with {{?RFC9111}}.  JRI does not impose any requirements in this regard.
+Depending on the exact functionality offered, the "cache" could be as simple as a look-up table.  It could also perform actual caching tasks such as managing a working set in limited memory, or integrating with a caching system such as one offered by HTTP clients in accordance with {{?RFC9111}}.  JRI does not impose any requirements in this regard.
 
 A JRI cache implementation MUST:
 
@@ -356,13 +356,13 @@ Removing references from a set of documents with differing base IRIs, or involvi
 
 #### Bundling to JSON Pointer fragment references only
 
-Despite implementing specifications that allow multi-document sets, in practice a significant number of tools only support same-resource references using JSON Pointer fragments (the only fragmenty syntax listed by name in older JSON Reference specifications).
+Despite implementing specifications that allow multi-document sets, in practice a significant number of tools only support same-resource references using JSON Pointer fragments (the only fragment syntax listed by name in older JSON Reference specifications).
 
 This form of bundling creates a single document and adjusts all references to only point to the newly bundled locations using JSON Pointers.
 
 #### Bundling with stable references
 
-A set of documents that each set `$id` in their root objects, and that only refer to each other using the primary resource identifiers set that way (plus any approriate fragment syntax) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
+A set of documents that each set `$id` in their root objects, and that only refer to each other using the primary resource identifiers set that way (plus any appropriate fragment syntax) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
 
 Unlike the previous two use cases, this type of bundling can be un-bundled.  An interoperable bundling format that can be safely un-bundled regardless of context is defined in {{bundling-interop}}.
 
@@ -376,7 +376,7 @@ Depending on the intended scope of support (e.g. a single self-referential docum
 
 A context specification incorporates JRI into a data format that describes JSON Pointer-compatible documents.  Such a specification MUST normatively reference this specification, and MUST specify any relevant context-specific requirements that this specification defers to context specifications.[^3]
 
-[^3]: Should a root object be mandated?  If not, how much variation to accommondate.  Should a root object have to allow JRI keywords?  **No, because OAS does not (and probably AsyncAPI does not either).**
+[^3]: Should a root object be mandated?  If not, how much variation to accommodate.  Should a root object have to allow JRI keywords?  **No, because OAS does not (and probably AsyncAPI does not either).**
 
 ## Fragments and secondary resources
 
@@ -398,7 +398,7 @@ Context specifications MAY define how such reference effects are combined with t
 
 There is no universally safe way to edit a document containing a reference to contain the reference target instead, even without circular references, although context specifications MAY define such edits.[^30]
 
-[^30]: At one point in JSON Schema spec development, we discussed allowing reference "removal" by replacing `$ref` and its IRI value with `$inline` and the reference target value.  This allows inlining at the keyword level without needing to understand a context specification.  `$inline` was essentially a one-element `allOf` that conveyed that a reference had been inlined.  Is this worth reviving in JRI?  Doing so would not force JSON Schema to adopt it.  One complexity would be that if there are multiple JRI reference keywords, we would either need one inlinng keyword per reference if we want it to be reversible, or `$inline` would have to support meta-data along with the target.
+[^30]: At one point in JSON Schema spec development, we discussed allowing reference "removal" by replacing `$ref` and its IRI value with `$inline` and the reference target value.  This allows inlining at the keyword level without needing to understand a context specification.  `$inline` was essentially a one-element `allOf` that conveyed that a reference had been inlined.  Is this worth reviving in JRI?  Doing so would not force JSON Schema to adopt it.  One complexity would be that if there are multiple JRI reference keywords, we would either need one inlining keyword per reference if we want it to be reversible, or `$inline` would have to support meta-data along with the target.
 
 ### Disambiguating reference semantics {#disambiguator}
 
@@ -464,19 +464,19 @@ These parameters are intended for use in environments where a standalone impleme
 
 Non-media type context data formats MAY define a mechanism analogous to these media type parameters, but such mechanisms will not be interoperable.
 
-#### The "jri-safety" media type paramter
+#### The "jri-safety" media type parameter
 
-The value of the `jri-safety` parameter MUST be case-insensitive, and MUST be either `interoperable` or `contextual`.  The default value is `contextual`, indicating that an implementation MUST be aware of and support the relevant context specification in order to safely process JRI keywors in the document.  A value of `interoperable` indicates that the document is context-independent, and safe to process by a standalone implementation.
+The value of the `jri-safety` parameter MUST be case-insensitive, and MUST be either `interoperable` or `contextual`.  The default value is `contextual`, indicating that an implementation MUST be aware of and support the relevant context specification in order to safely process JRI keywords in the document.  A value of `interoperable` indicates that the document is context-independent, and safe to process by a standalone implementation.
 
 ### The "jri-keywords" media type parameter
 
-The value of the `jri-keywords` parameter MUST be a case-senstive comma-separated list of JRI keyword names, which MUST NOT contain whitespace.  These keywords MAY be in any order.  This indicates that only the listed keywords are used in the document. In the absence of this parameter, an implementation MUST assume that any JRI keyword can be used.
+The value of the `jri-keywords` parameter MUST be a case-sensitive comma-separated list of JRI keyword names, which MUST NOT contain whitespace.  These keywords MAY be in any order.  This indicates that only the listed keywords are used in the document. In the absence of this parameter, an implementation MUST assume that any JRI keyword can be used.
 
 ### A JSON Schema vocabulary for safe processing
 
 [^42]
 
-[^42]: A simple annotation vocabulary could indicate where exactly in a document JRI keywords can appear, and what behavior they might have.  Unlike the media type parameters, this approach could distinguish between `$ref`/`$id`/`$anchor` within a schema vs those property names with JRI-correct values within `enum`, `const`, or `examples`.  This would make it possible to use a generic JRI cache as the base for a JSON Schema impementation.
+[^42]: A simple annotation vocabulary could indicate where exactly in a document JRI keywords can appear, and what behavior they might have.  Unlike the media type parameters, this approach could distinguish between `$ref`/`$id`/`$anchor` within a schema vs those property names with JRI-correct values within `enum`, `const`, or `examples`.  This would make it possible to use a generic JRI cache as the base for a JSON Schema implementation.
 
 # Security Considerations
 
@@ -506,7 +506,7 @@ JRI is also intended to be usable with resources that do not define a media type
 
 [^20]: It's unclear what the best approach to this is right now, but I have come up with several possible ways to specify a primary resource IRI (no-fragment) and a piece of data (JSON Pointer or otherwise) that performs the secondary resouce identification.
 
-# JSON Pointer compatiblity {#jsonpointer}
+# JSON Pointer compatibility {#jsonpointer}
 
 This section defines how to determine if a format is compatible with JSON Pointer by specifying what aspects of a format do and do not need to be mapped to JSON concepts.  It is up to individual implementations and context specifications to determine if any particular format is JSON Pointer-compatible, and how to support evaluating pointers that use JSON Pointer syntax for documents in that format.  An example of how to do this is the YAML media type's correlation of YAML and JSON in {{?I-D.ietf-httpapi-yaml-mediatypes, Section 3.3}}
 
@@ -520,7 +520,7 @@ Any document that can be converted as described in the previous paragraph could 
 
 Note that a many documents in a format can be JSON Pointer-compatible, even if the format in general is not.  For example, YAML is not compatible due to allowing non-string property values, but the very commonly used JSON-compatible subset of YAML is, of course, JSON Pointer-compatible.  The proposed YAML media type registration {{?I-D.ietf-httpapi-yaml-mediatypes-03, Section 3.3}} addresses this, including the evaluation of JSON Pointers over YAML documents.
 
-On the other hand, the mixure of elements and attributes in XML means that XML is never JSON Pointer-compatible.  There is no obvious single way to map XML to JSON-like objects and arrays, as demonstrated by the need for the `xml` keyword in {{oas3.1}}.
+On the other hand, the mixture of elements and attributes in XML means that XML is never JSON Pointer-compatible.  There is no obvious single way to map XML to JSON-like objects and arrays, as demonstrated by the need for the `xml` keyword in {{oas3.1}}.
 
 # Acknowledgements
 
