@@ -280,13 +280,11 @@ from processing such documents.
 
 A document that can be interoperably processed by a context-independent JRI implementation will be referred to in this section as a _context-independent document_.  A data format for which all valid documents are context-independent documents will be referred to in this section as a _context-independent format._
 
-The requirements below are stated for context-independent formats.  A document in a non-context-indpendent format can be context-independent if it avoids using any features forbidden by the context-independent format requirements.
+The requirements below are stated for context-independent formats.  A document in a non-context-independent format can be context-independent if it avoids using any features forbidden by the context-independent format requirements.
 
 ### Restricting base IRI changes and IRI assignment {#interop-overlap}
 
 A context-independent format MUST NOT offer features for assigning IRIs to primary or secondary resources, or changing the base IRI from within a document.
-
-A context-independent document MUST NOT use any such features if the data format offers them.
 
 ### Recognizing JRI keywords
 
@@ -307,8 +305,6 @@ A context-independent format MUST NOT allow any non-JRI-reference keywords in th
 A context-independent format MUST NOT allow JRI identifiers anywhere other than its root object or under a `$defs` keyword appearing (recursively) in the root object.[^10]
 
 [^10]:Alternatively, we could treat them like the reference keywords and require that they be allowed anywhere.  Neither approach works with JSON Schema, but the JSON Schema vocabulary for JRI proposed in a later section would provide a way to do so.
-
-A context-independent document MUST NOT use JRI identifiers outside of these locations.
 
 ### Interoperable bundling and un-bundling {#bundling-interop}
 
