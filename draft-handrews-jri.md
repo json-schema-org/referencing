@@ -438,8 +438,13 @@ JRI referencing is only interoperable if all non-JRI keywords (other than those 
 
 The functionality of JRI could mostly be implemented using {{?RFC8288}} web linking.  However, there are a variety of competing JSON-based formats for linking, many of which impose structural constraints likely to conflict with the needs of context specifications.  JRI is a simpler and more focused specification, intended to be easily incorporated into a variety of possible formats.
 
+The following keywords are roughly analogous to web links:
+
 * The `$id` keyword effectively defines a link with relation type "self".
-* The `$ref` keyword effectively defines (and asks implementations to automatically follow) a link with the generic relation type "related".
+* Reference keywords with object semantics effectively defines a link with relation type "full".
+* Reference keywords with keyword semantics effectively defines a link with the generic relation type "related".
+
+In the absence of other link metadata or context specification guidance, the target of a reference keyword MAY be treated as carrying a target media type hint (as in {{?RFC8288, Section 3.4.1}}) suggesting that the target media type is identical to the media type of the document containing the reference.
 
 # Interoperability Considerations {#interop}
 
