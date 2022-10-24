@@ -10,6 +10,9 @@ Please use pull requests from a repository fork to submit new proposals.  PRs fo
 
 During this intial phase, proposal authors can determine when to merge PRs against their proposals.  This will change once we settle on a proposal to take into the standardization process.
 
+## Discussion
+
+This repository can be discussed on the `#referencing` channel on our [Slack server](https://json-schema.org/slack).
 ## Conduct
 
-All official channels including the mailing list, GitHub organization, and Freenode channel, follow the IETF Guidelines for Conduct as specified in [RFC7154](https://tools.ietf.org/html/rfc7154).
+All official channels including but not limited to the GitHub organization and the Slack server, follow our [Code of Conduct](https://github.com/json-schema-org/.github/blob/main/CODE_OF_CONDUCT.md).
