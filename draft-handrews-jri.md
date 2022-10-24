@@ -317,7 +317,9 @@ Context media types that define a fragment syntax SHOULD further constrain the s
 
 Many data formats perform some sort of action for each object that might contain JRI keywords.  For example, JSON Schema allows JRI keywords in schema objects, but most schema objects are automatically applied to instances.  To facilitate re-use, such formats need a location where re-usable objects can be stored without causing an action to happen unless and until they are referenced.
 
-While any keyword can be defined with such a function, using the JRI standard location keyword enables safe interoperable bundling by standalone tools as described in {{bundling-interop}}.
+Context specifications will likely define their own such keywords, such as the `components` keyword used in both OpenAPI {{oas3.1}} and AsyncAPI {{async2.0}}, which has subsections for different component types.  Using the JRI standard location keyword (`$defs`) is not required, but enables safe interoperable bundling by standalone tools as described in {{bundling-interop}}.[^70]
+
+[^70]: It's also possible to bundle documents that do not use `$defs` into a document that does, and can therefore be un-bundled by a generic bundling tool.  I'm not sure of the best way to talk about that, as I did not want to get into defining a bundling media type.
 
 ### `$defs`
 
