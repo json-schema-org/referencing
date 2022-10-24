@@ -16,7 +16,7 @@ This has led to a number of challenges:
 * JSON Reference-based tools often implement behaviors (bundling and unbundling, assigning URIs) that are not addressed by the JSON Reference draft
 * Tools have inconsistent feature sets, resulting in interoperability challenges
 
-For links to numerous discussions and a complete history of the potentially relevant keywords, see the [BACKGROUND](BACKGROUND.md) file.
+**For links to numerous discussions and a complete history of the potentially relevant keywords, see the [BACKGROUND](BACKGROUND.md) file.**
 
 Please note that JSON Schema's dynamic referencing features (e.g. `"$dynamicAnchor"` and `"$dynamicRef"`) are ***not*** within the scope of this repository.
 
