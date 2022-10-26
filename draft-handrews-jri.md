@@ -58,7 +58,7 @@ The full and rather complex history of these keywords, including their usage in 
 
 Use cases have been compiled from popular tools that support JSON Reference (and sometimes other keywords in this specification) without being full JSON Schema implementations, and from specification requirements regarding non-JSON Schema use.  Notably, some of the tools support additional JRI keywords that were not included in JSON Reference, motivating a larger specification than simply a revival of JSON Reference.  These requirements and use cases are also available in the [BACKGROUND.md](https://github.com/json-schema-org/referencing/tree/main/BACKGROUND.md) file.
 
-Discussion of this draft takes place in the [GitHub repository](https://github.com/json-schema-org/referencing) and on the [JSON Schema Slack server](https://json-schema.org/slack).
+Discussion of this draft takes place in the [GitHub repository](https://github.com/json-schema-org/referencing) and on the `"#referencing"` channel of the [JSON Schema Slack server](https://json-schema.org/slack).
 
 --- middle
 
