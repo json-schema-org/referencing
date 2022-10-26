@@ -130,7 +130,7 @@ To support the full base IRI determination process defined in {{!RFC3987, Sectio
 * the context specification requires an absolute base IRI defined within each primary resource
 * the context specification requires all IRI-references to be non-relative or fragment-only
 
-Such a base IRI is necessary if the implementation encounters a relative IRI-reference prior to determining a non-relative a base IRI defined within the content.  It is assumed that any provided base IRI has been determined in accordance with the relevant specifications.
+Such a base IRI is necessary if the implementation encounters a relative IRI-reference prior to determining a non-relative base IRI defined within the content.  It is assumed that any provided base IRI has been determined in accordance with the relevant specifications.
 
 An implementation that does not meet either of the above criteria yet still disregards this recommendation MUST document the limitation and treat unresolvable relative references as an error.
 
@@ -249,9 +249,7 @@ With keyword-level semantics, a JRI reference keyword remains part of the evalua
 
 ##### Falling back to object-level semantics
 
-Context specifications that use keyword-level semantics SHOULD ensure that, in the absence of keywords adjacent to JRI reference keywords, object-level JRI reference semantics can be assumed without changing the semantics of the document according to the context specification.  This requires that the difference in evaluation paths not impact the context semantics.
-
-For example, in JSON Schema, replacing an object that contains only `"$ref"` is guaranteed to not change the validation outcome, and only changes the evaluation path of annotations.  Since the presence of `"$ref"` in the evaluation path is used to determine whether keywords are present adjacent to `"$ref"`, omitting it when no such adjacent keywords are present is safe.  While JSON Schema specifies keyword-level semantics, a tool that replaced `"$ref"`-only objects with their targets according to object-level semantics prior to JSON Schema evaluation would not break the schema's behavior.
+Context specifications that use keyword-level semantics SHOULD ensure that, in the absence of keywords adjacent to JRI reference keywords, object-level JRI reference semantics can be assumed without changing the semantics of the document according to the context specification.  This requires that the difference in evaluation paths not impact the context semantics, as is further discussed in {{context-fallback}}.
 
 ## Extending JRI {#extending}
 
@@ -344,7 +342,7 @@ A JRI cache implementation MAY:
 
 ### Document set transformations
 
-A common family of use cases involves reading one or more JRI-using documents and transforming them in a way that makes them usable by a wider range of tooling.
+A common family of use cases involves reading one or more JRI-using documents and transforming them in a way that makes them usable by a wider range of tooling.  Note that circular references can cause problems for these use cases, as discussed in {{infinite}}.
 
 #### Reference removal
 
@@ -362,7 +360,7 @@ This form of bundling creates a single document and adjusts all references to on
 
 #### Bundling with stable references
 
-A set of documents that each set `"$id"` in their root objects, and that only refer to each other using the primary resource identifiers set that way (plus any appropriate fragment syntax) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
+A set of documents that each define `"$id"` in their root objects, and that only refer to each other using the primary resource identifiers set that way (plus any appropriate fragment syntax) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
 
 Unlike the previous two use cases, this type of bundling can be un-bundled.  An interoperable bundling format that can be safely un-bundled regardless of context is defined in {{bundling-interop}}.
 
@@ -403,6 +401,12 @@ There is no universally safe way to edit a document containing a reference to co
 ### Disambiguating reference semantics {#disambiguator}
 
 Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.
+
+### Context-specific fallback to object-level semantics {#context-fallback}
+
+Context specifications that use keyword-level semantics SHOULD define whether and under what circumstances it is safe for tooling to fall back to object-level semantics.  Whether or not this is feasible depends in part over whether an evaluation path that does not include the reference keyword (e.g. `"$ref"`) changes the context semantics.  This might be safe if there are no adjacent keywords to the reference keyword, and the presence of the reference is not considered inherently semantically meaningful.
+
+To a significant degree, this is a less a question of JRI behavior, and more a question of what documents are considered equivalent according to the context specification.
 
 ## Incorporating a subset of JRI
 
@@ -484,7 +488,7 @@ On-demand retrieval and processing of referenced resources brings the security r
 
 Implementations of a JRI cache that implement a functional caching system (rather than a simple lookup table) need to address the security considerations of the caching process(es) that they support.
 
-## Guarding Against Infinite Recursion
+## Guarding Against Infinite Recursion {#infinite}
 
 An implementation MUST guard against infinite reference loops.
 
@@ -518,7 +522,7 @@ If a data format's parsed in-memory representation can be serialized according t
 
 Any document that can be converted as described in the previous paragraph could equivalently evaluate syntactically valid JSON Pointers by substituting its own object and array definitions for JSON Objects and Arrays, and adjusting the string comparison rules as needed if it does not use Unicode.
 
-Note that a many documents in a format can be JSON Pointer-compatible, even if the format in general is not.  For example, YAML is not compatible due to allowing non-string property values, but the very commonly used JSON-compatible subset of YAML is, of course, JSON Pointer-compatible.  The proposed YAML media type registration {{?I-D.ietf-httpapi-yaml-mediatypes-03, Section 3.3}} addresses this, including the evaluation of JSON Pointers over YAML documents.
+Note even in a non-JSON Pointer-compatible format, many individual documents can still be JSON Pointer-compatible.  For example, YAML is not compatible due to allowing non-string property values, but the very commonly used JSON-compatible subset of YAML is, of course, JSON Pointer-compatible.  The proposed YAML media type registration {{?I-D.ietf-httpapi-yaml-mediatypes-03, Section 3.3}} addresses this, including the evaluation of JSON Pointers over YAML documents.
 
 On the other hand, the mixture of elements and attributes in XML means that XML is never JSON Pointer-compatible.  There is no obvious single way to map XML to JSON-like objects and arrays, as demonstrated by the need for the `xml` keyword in {{oas3.1}}.
 
