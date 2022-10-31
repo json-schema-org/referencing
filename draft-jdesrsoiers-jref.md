@@ -30,10 +30,10 @@ This media type allows the "profile" media type parameter as defined by [RFC
 ## The "reference" Type
 
 ### Syntax
-A "reference" type is represented as a JSON object with a `$href` property whose
-value is string. Specifications that extend this media type MAY define semantics
-for additional properties, but implementations MUST raise an error if they
-encounter a property that is not defined.
+A "reference" type is represented with the same syntax as a JSON object with a
+`$href` property whose value is string. Specifications that extend this media
+type MAY define semantics for additional properties, but implementations MUST
+raise an error if they encounter a property that is not defined.
 
 ```json
 { "$href": "https://example.com/example.json#/foo/bar" }
@@ -43,31 +43,28 @@ Although the "reference" type has syntactic overlap with the JSON "object" type,
 it MUST NOT be interpreted as a JSON object. The "reference" type is a scalar
 value that can not be indexed into like a JSON object.
 
-A JSON object is considered a "reference" rather than an "object" if it has a
-`$href` property and the value of that property is a string.
+A JSON object is considered of type "reference" rather than type "object" if it
+has a `$href` property and the value of that property is a string.
 
 ### Following References
-The value of `$href` in a reference MUST be interpreted as a [URI
-reference](https://www.rfc-editor.org/rfc/rfc3986#section-4.1). The process for
-determining a base URI for resolving to a full
-[URI](https://www.rfc-editor.org/rfc/rfc3986#section-3) is defined by [RFC 3986
-Section 5.1](https://www.rfc-editor.org/rfc/rfc3986#section-5.1). Specifications
-that extend this media type MAY add keywords that effect the base URI, but if
-they do, they MUST do so in a way that is compatible with [RFC 3986 Section
-5.1](https://www.rfc-editor.org/rfc/rfc3986#section-5.1).
+The value of `$href` in a reference MUST be interpreted as a
+[URI-reference](https://www.rfc-editor.org/rfc/rfc3986#section-4.1). The process
+for determining the base URI for the document is defined by [RFC 3986 Section
+5.1](https://www.rfc-editor.org/rfc/rfc3986#section-5.1). Specifications that
+extend this media type MAY add keywords that effect the base URI, but if they
+do, they MUST do so in a way that fits into the framework expressed in [RFC 3986
+Section 5.1](https://www.rfc-editor.org/rfc/rfc3986#section-5.1).
 
 Following a reference may result in media types other than JRef being returned.
 While implementations are not limited to only handling JRef responses, they MUST
 raise an error if they encounter a media type they do not support.
 
 When following a URI that uses a protocol where the response is self describing
-of its media type, implementations MUST NOT assume the response is a JRef
-document or use heuristics including file extensions to determine the media type
-of the response. For example, an HTTP response for `https://example.com/example`
-that has `Content-Type: application/json` should not be treated as a JRef media
-type. That means that any objects with a `$href` property should not be
-considered a reference. It would just be a JSON object that looks like a JRef
-reference.
+of its media type, implementations MUST respect the declared media type. For
+example, an HTTP response for `https://example.com/example` that has
+`Content-Type: application/json` should be treated as plain JSON document rather
+than as JRef document. That means that any objects with a `$href` would be of
+type "object" rather than type "reference".
 
 When following a URI using a protocol where the response is not self describing
 of its media type (such as file system access), implementations MAY use whatever
