@@ -7,6 +7,11 @@ adds the "reference" type. A "reference" type represents a web-style
 uni-directional link to a location in either the current document or a different
 resource.
 
+NOTE: This document is written as a spec and therefore doesn't have commentary
+on why I made the decisions I made or what impacts they would have for the
+specifications that might be interested in adopting this spec. For that type of
+information see https://github.com/json-schema-org/referencing/issues/7.
+
 ## Media Type
 The JRef media type is identified as `application/reference+json` and uses the
 `jref` file extension.
