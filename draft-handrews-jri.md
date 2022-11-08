@@ -493,7 +493,7 @@ An implementation MUST guard against infinite reference loops.
 
 Processing rules for context specifications MAY make it safe to have cyclic references by creating conditions under which a reference will or will not be followed.
 
-Cyclic references cannot safely be processed in a way that is both interoperable and context-independent.  Seeing a specific reference while processing the target of that same reference MUST be considered an error by context-unaware implementations.
+Cyclic references cannot safely be removed and replaced with their targets in a way that is both interoperable and context-independent.  Without a context-specific mechanism for terminating the cycle, any cycles detected during such a process MUST be considered an error.
 
 # IANA Considerations
 
