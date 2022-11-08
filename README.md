@@ -39,11 +39,13 @@ Due to the focus on interoperability, the initial assumption is to produce IETF 
 
 ## Format
 
-Proposals should be written in Markdown and submitted as PRs from a fork of the repo, and named in RFC I-D `draft-{primary-editor}-{draft-name}.md` style.  For example, if JSON Schema Validation were written in this format, the file name would be `draft-bhutton-json-schema-validation.md`.
+Proposals should be written in Markdown and submitted as PRs from a fork of the repo.
 
-Plain markdown is welcome.  The repository will also automatically build [kramdown-rfc](https://github.com/cabo/kramdown-rfc) format documents, which can use the [markdown I-D template](https://github.com/martinthomson/i-d-template) as a starting point.
+The repository will automatically build [kramdown-rfc](https://github.com/cabo/kramdown-rfc) format documents, which should be named in RFC I-D `draft-{primary-editor}-{draft-name}.md` style.  For example, if JSON Schema Validation were written in this format, the file name would be `draft-bhutton-json-schema-validation.md`.
 
-You will need a reasonably recent version of Python 3 to run a local build, but the makefile will check out everything else it needs using a submodule and automatically create a virtual env for the build.
+Plain markdown is also welcome, and such proposals should be named `{primary-editor}-{draft-name}.md`.
+
+If you would like to use the RFC I-D format, you can use the [markdown I-D template](https://github.com/martinthomson/i-d-template) as a starting point.  You will need a reasonably recent version of Python 3 to run a local build, but the makefile will check out everything else it needs using a submodule and automatically create a virtual env for the build.
 
 ## License
 
