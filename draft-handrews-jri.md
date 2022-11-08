@@ -323,7 +323,7 @@ A JRI cache implementation MUST:
 * Be able to associate a document, including non-JRI documents that could be JRI reference targets, with an IRI
 * Locate all JRI identifiers (primary and secondary resources) within any document and automatically include them in the cache
 * Locate all JRI references and resolve any relative IRI-references to full IRIs in the cached representation
-* In its default configuration, treat cache misses as errors, since JRI reference IRIs are be assumed to be locators
+* In its default configuration, treat cache misses as errors, since JRI reference IRIs are assumed to be locators
 * Resolve IRIs that use JSON Pointer fragments as long as the primary resource is in the cache (when such fragments are appropriate for the resource.
 
 JSON Pointer fragment resolution can either be done by indexing valid JSON Pointers, which typically involves understanding JRI location keywords and any similar context-specific locations, or by matching the primary resource and evaluating the JSON Pointer on that resource on demand.  However, discovering JRI identifiers generally needs to be done in advance, as compound documents mean that the location of a primary resource might only be detectable by scanning a document that appears to be a different resource.
@@ -359,7 +359,7 @@ This form of bundling creates a single document and adjusts all references to on
 
 #### Bundling with stable references
 
-A set of documents that each define `"$id"` in their root objects, and that only refer to each other using the primary resource identifiers set that way (plus any appropriate fragment syntax) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
+A set of documents that each define `"$id"` in their root objects, and that only refer to each other using the primary resource identifiers set by those `"$id"`s (plus any appropriate fragment syntax when referencing secondary resources) can be bundled into a single compound document that satisfies all references internally without the need to edit them.
 
 Unlike the previous two use cases, this type of bundling can be un-bundled.  An interoperable bundling format that can be safely un-bundled regardless of context is defined in {{bundling-interop}}.
 
@@ -473,7 +473,7 @@ The value of the `jri-safety` parameter MUST be case-insensitive, and MUST be ei
 
 ### The "jri-keywords" media type parameter
 
-The value of the `jri-keywords` parameter MUST be a case-sensitive comma-separated list of JRI keyword names, which MUST NOT contain whitespace.  These keywords MAY be in any order.  This indicates that only the listed keywords are used in the document. In the absence of this parameter, an implementation MUST assume that any JRI keyword can be used.
+The value of the `jri-keywords` parameter MUST be a case-sensitive comma-separated list of JRI keyword names, which MUST NOT contain whitespace.  These keywords MAY be in any order and SHOULD be unique.  This indicates that only the listed keywords are used in the document. In the absence of this parameter, an implementation MUST assume that any JRI keyword can be used.
 
 ### A JSON Schema vocabulary for safe processing
 
