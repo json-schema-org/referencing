@@ -78,14 +78,13 @@ To support a variety of use cases, JRI supports trade-offs between generic inter
 
 The terms "primary resource" and "secondary resource" in this specification are to be interpreted as in {{!RFC3986, Section 3.5}}.
 
-Due to the distinction that this specification makes between documents and resources, the term "same-resource reference" is to be interpreted in the same way as "same-document reference" as defined in {{!RFC3986, Section 4.4}}.  The term "same-document reference" is not used in this specification.
-
 The terms "IRI", "IRI-reference", "relative reference", "absolute-IRI", and "base IRI" in this specification are to be interpreted as in {{!RFC3987}}.
 
 ## Definitions
 
 In addition to the terms from other specifications listed in the previous section, this document uses the following terminology:
 
+* _same-resource reference_: used in this specification in place of "same-document reference" as defined in {{!RFC3986, Section 4.4}} due to the distinction this specificaiton makes between documents and resources; "same-document reference" is not used in this specification
 * _data format:_ any specification for structuring data within a document, including but not limited to formal media types
 * _JSON-based format:_ any data format using {{?RFC8259}} JSON as its syntax, including but not limited to formats defined with an `application/json` or `+json` structured suffix media type
 * _JSON Pointer-compatible document:_ any document with a structure that can be unambiguously addressed by JSON Pointer as described in {{jsonpointer}}
