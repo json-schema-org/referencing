@@ -70,7 +70,7 @@ Standalone JRI use cases include a variety of document transformations, transpar
 
 While {{?RFC8288}} web linking solves this problem in a more general way, a simplified, concise, and self-contained linking and identification system is better-suited to many specifications.  This allows those specifications to avoid complexity, and to avoid constraining their syntax to match any one of the many competing web linking-enabled JSON formats.
 
-To support a variety of use cases, JRI supports trade-offs between generic interoperability and tight integration with the context in which it is used.  JRI defines an interoperable subset of its features for standalone use, while encouraging specifications that need reference and/or identification features to incorporate as much or as little of JRI as suits their needs.  JRI also defines mechanisms for resources to indicate their JRI usage, allowing generic or standalone implementations to understand how to safely process a document without knowledge of its underlying data format.
+To support a variety of use cases, JRI supports trade-offs between generic interoperability and tight integration with the context in which it is used.  JRI defines an interoperable subset of its features for standalone use while encouraging specifications that need reference and/or identification features to incorporate as much or as little of JRI as suits their needs, as long as they do not redefine the parts not incorporated.  JRI also defines mechanisms for resources to indicate their JRI usage, allowing generic or standalone implementations to understand how to safely process a document without knowledge of its underlying data format.
 
 ## Notational Conventions
 
