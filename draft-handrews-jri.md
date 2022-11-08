@@ -184,7 +184,7 @@ JRI behaviors, whether implemented by JRI keywords or by context specification f
 1. Locations (`"$defs"`)
 1. References (`"$ref"`, `"$extRef"`)
 
-The logic of this ordering is that primary resources must be identified first as all other keywords depend having the correct base IRI.  Next, secondary resources can be identified once the primary resource is known.  Finally, nested locations which can be reference targets or have additional identifier keywords can be discovered within the primary resource.
+The logic of this ordering is that primary resources must be identified first as all other keywords depend having the correct base IRI.  Next, secondary resources can be identified once the primary resource is known.  Finally, nested locations which can be reference targets or have additional identifier keywords can be discovered (as discussed in {{discovering}} and {{serving}}) within the primary resource.
 
 ### Identification
 
@@ -194,7 +194,7 @@ JRI offers two identification keywords:  one for primary resources, and one for 
 
 The value of the `"$id"` property MUST be a string, and MUST be a valid IRI-reference as defined by {{!RFC3987, Section 2.2}}, and MUST NOT contain a fragment.
 
-The object containing the `"$id"` property MUST be considered to be a primary resource and to be identified by the IRI produced by resolving the IRI-reference against the current base IRI.  This IRI MUST be considered the base IRI for the newly identified primary resource, in accordance with {{!RFC3986, Section 5.1.1}}.
+The object containing the `"$id"` property MUST be considered to be a primary resource and to be identified by the IRI produced by resolving the IRI-reference against the current base IRI.  This IRI MUST be considered the base IRI for the primary resource that it identifies, in accordance with {{!RFC3986, Section 5.1.1}}.
 
 If the object containing the `"$id"` property is not the root object of the document, the encapsulating resource MUST be considered to be an "encapsulating entity" per {{!RFC3986, Section 5.1.2}}.
 
@@ -291,7 +291,7 @@ A context-independent format MUST NOT allow any non-JRI-reference keywords in th
 
 [^11]: Should we allow a context-independent format to allow non-JRI keywords in reference objects as long as it mandates that they are, in all circumstances, ignored?  Aside from `"$comment"`, this seems like asking for trouble, and OpenAPI and AsyncAPI notably forbid any properties other than `"$ref"` in their Reference Objects.  But it would be closer to JSON Reference behavior.
 
-### Finding JRI identifiers
+### Discovering JRI identifiers {#discovering}
 
 A context-independent format MUST NOT allow JRI identifiers anywhere other than its root object or under a `"$defs"` keyword appearing (recursively) in the root object.[^10]
 
@@ -312,7 +312,7 @@ The popularity of tools devoted only to processing `"$ref"` demonstrates a subst
 
 JRI exists to facilitated interoperable tooling.  Therefore, several common applications of JRI here are described to encourage common functionality.
 
-### Locating, caching, and serving resources
+### Discovering, caching, and serving resources {#serving}
 
 A primary use case for JRI involves removing the need for downstream tools to track base IRIs and retrieve identified resources.  We will refer to a tool that fulfills this use case as a _JRI cache_.  In this use case, downstream tooling still encounters JRI references, but they have already been resolved to full IRIs (with a scheme), and the implementation resolves all IRIs by requesting them from the JRI cache.
 
@@ -326,7 +326,7 @@ A JRI cache implementation MUST:
 * In its default configuration, treat cache misses as errors, since JRI reference IRIs are be assumed to be locators
 * Resolve IRIs that use JSON Pointer fragments as long as the primary resource is in the cache (when such fragments are appropriate for the resource.
 
-JSON Pointer fragment resolution can either be done by indexing valid JSON Pointers, which typically involves understanding JRI location keywords and any similar context-specific locations, or by matching the primary resource and evaluating the JSON Pointer on that resource on demand.  However, locating JRI identifiers generally needs to be done in advance, as compound documents mean that the location of a primary resource might only be detectable by scanning a document that appears to be a different resource.
+JSON Pointer fragment resolution can either be done by indexing valid JSON Pointers, which typically involves understanding JRI location keywords and any similar context-specific locations, or by matching the primary resource and evaluating the JSON Pointer on that resource on demand.  However, discovering JRI identifiers generally needs to be done in advance, as compound documents mean that the location of a primary resource might only be detectable by scanning a document that appears to be a different resource.
 
 A JRI cache implementation SHOULD:
 
