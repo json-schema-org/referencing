@@ -200,7 +200,7 @@ JRI offers two identification keywords:  one for primary resources, and one for 
 
 The value of the `"$id"` property MUST be a string, and MUST be a valid IRI-reference as defined by {{!RFC3987, Section 2.2}}, and MUST NOT contain a fragment.
 
-The object containing the `"$id"` property MUST be considered to be a primary identifiable by the IRI produced by resolving the IRI-reference against the current base IRI.  This IRI MUST be considered the base IRI for the primary resource that it identifies, in accordance with {{!RFC3986, Section 5.1.1}}.
+The object containing the `"$id"` property MUST be considered to be a primary resource identifiable by the IRI produced by resolving the IRI-reference against the current base IRI.  This IRI MUST be considered the base IRI for the primary resource that it identifies, in accordance with {{!RFC3986, Section 5.1.1}}.
 
 If the object containing the `"$id"` property is not the root object of the document, the encapsulating resource MUST be considered to be an "encapsulating entity" per {{!RFC3986, Section 5.1.2}}.
 
