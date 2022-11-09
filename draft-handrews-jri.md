@@ -114,6 +114,11 @@ For formats that incorporate JRI, "processing" includes resolving relative IRI-r
 * _uniform compound document:_ a compound document in which all primary resources are of the same data format
 * _mixed compound document:_ a compound document in which the primary resources are of different data formats
 
+### Reference Semantics
+
+* _object-level semantics:_ The object containing the reference keyword is completely replaced by the reference target, regardless of the presence of any other properties or the semantics of the context specification, if any
+* _keyword-level semantics:_ The reference target is processed, and its results combined with those of other keywords in the same object as the reference keyword, according to the relevant context specification
+
 # JRI Fundamentals
 
 ## IRI Behavior in JRI {#iri-behavior}
