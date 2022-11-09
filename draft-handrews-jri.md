@@ -92,6 +92,7 @@ In addition to the terms from other specifications listed in the previous sectio
 * _keyword:_ an object property name with specification-defined behavior, as opposed to object properties which are simply data
 * _processing a data format:_ performing any actions required by the format, typically based on the format's structure and keywords, beyond simply parsing the format into an in-memory representation
 * _evaluation path:_ the path, including reference keywords traversed, taken to reach a particular point of processing from the document root at which processing started; the exact nature of this path depends on the reference semantics chosen as defined in {{ref-semantics}}
+* _location-defining behavior:_ the ability of certain keywords to indicate that a location in a document has specific semantics, typically including that the location supports JRI keywords
 
 For formats that incorporate JRI, "processing" includes resolving relative IRI-references and either associating the resulting IRI with the appropriate resource, or resolving the IRI to the resource with which it is already associated.
 
@@ -209,11 +210,11 @@ The value of the `"$anchor"` property MUST be a string, and MUST be a valid IRI 
 
 ### Location
 
-Location behavior is necessary when not all locations within a data format are valid reference targets, or when object properties that appear to be JRI keywords are only actually JRI keywords in certain locations.  In formats where most locations cause automatic actions (such as applying a schema to an instance), location behavior can also create areas where the automatic actions do not apply.  These reserved locations can safely hold re-usable objects separate from any single use.
+Location keywords have location-defining behavior.  This behavior is necessary when not all locations within a data format are valid reference targets, or when object properties that appear to be JRI keywords are only actually JRI keywords in certain locations.  In formats where most locations cause automatic actions (such as applying a schema to an instance), location-defining behavior can also create areas where the automatic actions do not apply.  These reserved locations can safely hold re-usable objects separate from any single use.
 
-The passive nature of location behavior makes it particularly suitable to be defined directly by context specifications, as noted in {{context-loc}}.  However, not all uses of JRI involve a context specification.
+The passive nature of location-defining behavior makes it particularly suitable to be defined directly by context specifications, as noted in {{context-loc}}.  However, not all uses of JRI involve a context specification.
 
-JRI reserves the `"$defs"` keyword in order to make no-automatic-action location behavior available within the `"$"`-prefixed namespace.  This keyword also enables safe interoperable bundling by standalone tools as described in {{bundling-interop}}.[^70]
+JRI reserves the `"$defs"` keyword in order to make no-automatic-action location-defining behavior available within the `"$"`-prefixed namespace.  This keyword also enables safe interoperable bundling by standalone tools as described in {{bundling-interop}}.[^70]
 
 [^70]: It's also possible to bundle documents that do not use `"$defs"` into a document that does, and can therefore be un-bundled by a generic bundling tool.  I'm not sure of the best way to talk about that, as I did not want to get into defining a bundling media type.
 
@@ -392,7 +393,7 @@ Context media types that define a fragment syntax SHOULD further constrain the s
 
 Context specifications MAY define location keywords that impose specific semantics within their values.  This is demonstrated by the `components` keyword used in both OpenAPI {{oas3.1}} and AsyncAPI {{async2.0}}, which has subsections for different component types.
 
-Context specifications MAY assign location behavior to keywords with other behaviors.  JSON Schema's inline applicator keywords {{?I-D.bhutton-json-schema-01, Section 7.5}} demonstrate this approach.
+Context specifications MAY assign location-defining behavior to keywords with other behaviors.  JSON Schema's inline applicator keywords {{?I-D.bhutton-json-schema-01, Section 7.5}} demonstrate this approach.
 
 Context specifications MAY restrict the values of reference targets within location keywords, including `"$defs"`.
 
