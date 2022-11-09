@@ -214,7 +214,7 @@ JRI reserves the `"$defs"` keyword in order to make no-automatic-action location
 
 #### `"$defs"`
 
-The value of the `"$defs"` property MUST be an object, which MUST have objects as the values of all of its properties.  JRI keywords MUST be allowed in these objects.  Aside from their use in JSON Pointers or similar structural identifiers, the property names within the `"$defs"` object MUST NOT be considered to impose specific semantics to the property values.
+The value of the `"$defs"` property MUST be an object.  The values of that object's properties are intended to be reference targets.  Therefore, the values can potentially be of any type, although context specifications can further constrain them as discussed in {{context-loc}}.  For values that are objects, JRI keywords MUST be allowed.  Aside from their use in JSON Pointers or similar structural identifiers, the property names within the `"$defs"` object MUST NOT be considered to impose specific semantics to the property values.
 
 ### Referencing
 
@@ -386,6 +386,8 @@ Context media types that define a fragment syntax SHOULD further constrain the s
 Context specifications MAY define location keywords that impose specific semantics within their values.  This is demonstrated by the `components` keyword used in both OpenAPI {{oas3.1}} and AsyncAPI {{async2.0}}, which has subsections for different component types.
 
 Context specifications MAY assign location behavior to keywords with other behaviors.  JSON Schema's inline applicator keywords {{?I-D.bhutton-json-schema-01, Section 7.5}} demonstrate this approach.
+
+Context specifications MAY restrict the values of reference targets within location keywords, including `"$defs"`.
 
 If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under under location keywords SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.
 
