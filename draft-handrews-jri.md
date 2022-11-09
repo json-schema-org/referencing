@@ -228,9 +228,11 @@ By default, the reference target MAY be assumed to be of whatever media type wou
 
 #### `"$extRef"`
 
-To avoid overloading the behavior of `"$ref"` or relying on non-interoperable context-specific behavior, `"$extRef"` (for "extensible reference") allows specifying additional metadata as well as alternative mechanisms for secondary resource identification.[^90]
+To avoid overloading the behavior of `"$ref"` or relying on non-interoperable context-specific behavior, `"$extRef"` (for "extensible reference") allows specifying additional metadata as well as alternative mechanisms for secondary resource identification.
 
-[^90]: It is not yet clear how this should work, or how many meta-data sub-keywords should be defined in this specification.  I have asked the AsyncAPI team some clarifying questions.  An object value in which an IRI (without fragment) is provided in one member, and a (non-fragment) JSON Pointer or other fragment-substitute is provided in another would seem to solve some problems.  However, there is also a need to set a per-reference media type, and such a media type might have a fragment syntax.  We also don't want it to be easy to define both a fragment and a fragment alternative in the same reference, as the result of that would be unintuitive at best.
+The value of the `"$extRef"` property MUST be an object.[^90]
+
+[^90]: The exact fields within this object are TBD pending discussion of this proposal with communities such as AsyncAPI that need this functionality.  Likely fields include an IRI without a fragment to identify the primary reference target, and an additional non-IRI field accepting a plain string JSON Pointer or other mechanism for identifying the secondary target, if any.  A field indicating/hinting the expected target media type or other format (as not all targets have a defined media type) is also likely.  Supporting a variety of media types might also require being able to specify an IRI with a fragment, although how to do that unambiguously when other media types cannot use fragments is not yet clear.
 
 #### Reference semantics {#ref-semantics}
 
