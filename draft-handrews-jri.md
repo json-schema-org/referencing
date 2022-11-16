@@ -1,4 +1,10 @@
 ---
+#### # This is a YAML block that the build system uses to produce
+#### # the boilerplate in the HTML output.  Normal YAML comment
+#### # syntax applies, but the extra #### (which you won't see if
+#### # you are reading this as rendered MarkDown) keeps comments from
+#### # rendering as H1 headers when viewing the MarkDown on GitHub.
+
 title: JSON Reference and Identification
 abbrev:
 docname: draft-handrews-jri-latest
@@ -21,7 +27,7 @@ author:
     country: U.S.A.
 
 normative:
-  # all normative references generated automatically
+  #### # all normative references generated automatically
 
 informative:
   oas3.1:
@@ -35,12 +41,14 @@ informative:
     - ins: Mike Ralphson
     - ins: Ron Ratovsky
     - ins: Uri Sarid
-  # AsyncAPI does not date their specs or list authors
-  # Dates are from GitHub release commits
+  #### # AsyncAPI does not date their specs or list authors
+  #### # Dates are from GitHub release commits
   async2.0:
     title: AsyncAPI Specification v2.0.0
     date: 2019-09-11
     target: "https://www.asyncapi.com/docs/reference/specification/v2.0.0"
+
+#### # End YAML header block.
 
 --- abstract
 
